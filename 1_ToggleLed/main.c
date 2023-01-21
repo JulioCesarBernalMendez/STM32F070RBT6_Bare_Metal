@@ -1,15 +1,30 @@
 #include <stdint.h>
 
-#define RCC_BASE_ADDR        0x40021000
-#define AHBENR               0x00000014
-#define IOPA_EN_BIT          ( 1 << 17 )
-#define GPIOA_CLK_ENBL()     ( *( unsigned int* )( RCC_BASE_ADDR + AHBENR ) |= IOPA_EN_BIT )
+#define PERIPH_BASE            ( 0x40000000UL )
+ 
+#define AHB1_PERIPH_OFFSET     ( 0x00020000UL )
+#define AHB1_PERIPH_BASE       ( PERIPH_BASE + AHB1_PERIPH_OFFSET )
 
-#define GPIOA_BASE_ADDR      0x48000000
-#define GPIOx_MODER          0x00000000
-#define GPIOx_OTYPER         0x00000004
-#define GPIOx_OSPEEDR        0x00000008
-#define GPIOx_ODR            0x00000014
+#define RCC_PERIPH_OFFSET      ( 0x00001000UL )
+#define RCC_PERIPH_BASE        ( AHB1_PERIPH_BASE + RCC_PERIPH_OFFSET )
+
+#define RCC_AHBEN_R_OFFSET     ( 0x00000014UL )
+#define RCC_AHBEN_R            ( *( volatile uint32_t* )( RCC_PERIPH_BASE + RCC_AHBEN_R_OFFSET ) )
+
+#define GPIOA_PERIPH_OFFSET    ( 0x08000000UL )
+#define GPIOA_PERIPH_BASE      ( PERIPH_BASE + GPIOA_PERIPH_OFFSET )
+
+#define GPIOx_MODE_R_OFFSET    ( 0x00000000UL )
+#define GPIOA_MODE_R           ( *( volatile uint32_t* )( GPIOA_PERIPH_BASE + GPIOx_MODE_R_OFFSET ) )
+
+#define GPIOx_OD_R_OFFSET      ( 0x00000014UL )
+#define GPIOA_ODR_R            ( *( volatile uint32_t* )( GPIOA_PERIPH_BASE + GPIOx_OD_R_OFFSET ) )
+
+#define GPIOA_EN_BIT           ( 0x01U << 17 )
+#define GPIOA_CLK_ENBL()       ( RCC_AHBEN_R |= GPIOA_EN_BIT )
+
+#define GPIOx_PIN_5            ( 0x01U << 5 )
+#define LED_PIN                GPIOx_PIN_5
 
 void GPIOA_Init( void );
 void toggle_led( void );
@@ -39,17 +54,15 @@ void GPIOA_Init( void )
     GPIOA_CLK_ENBL();
 
     /* GPIOA5 (BOARD LED) as output */
-    *( uint32_t* )( GPIOA_BASE_ADDR + GPIOx_MODER ) &= ~( 1 << 11 );
-    *( uint32_t* )( GPIOA_BASE_ADDR + GPIOx_MODER ) |=  ( 1 << 10 );
+    GPIOA_MODE_R &= ~( 0x01U << 11 );
+    GPIOA_MODE_R |=  ( 0x01U << 10 );
 
-    /* GPIOA5 as push-pull output */
-    *( uint32_t* )( GPIOA_BASE_ADDR + GPIOx_OTYPER ) &= ~( 1 << 5 );
+    /* GPIOA5 as push-pull output upon reset */
 
-    /* GPIOA5 as low speed output */
-    *( uint32_t* )( GPIOA_BASE_ADDR + GPIOx_OSPEEDR ) &= ~( 1 << 10 );
+    /* GPIOA5 as low speed output upon reset */
 }
 
 void toggle_led( void )
 {
-    *( uint32_t* )( GPIOA_BASE_ADDR + GPIOx_ODR ) ^= ( 1 << 5 );
+    GPIOA_ODR_R ^= ( 1 << 5 );
 }

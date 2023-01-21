@@ -11,73 +11,73 @@ Linker script and memory map
 LOAD main.o
 LOAD stm32_startup.o
 
-.text           0x08000000      0x1e0
+.text           0x08000000      0x1bc
  *(.vector_table)
  .vector_table  0x08000000       0xa0 stm32_startup.o
                 0x08000000                vector_table
  *(.text)
- .text          0x080000a0       0xac main.o
+ .text          0x080000a0       0x88 main.o
                 0x080000a0                main
                 0x080000c8                GPIOA_Init
-                0x08000130                toggle_led
- .text          0x0800014c       0x94 stm32_startup.o
-                0x0800014c                Reset_Handler
-                0x080001d8                FLASH_Handler
-                0x080001d8                EXTI2_3_Handler
-                0x080001d8                SVCall_Handler
-                0x080001d8                USART3_4_5_6_Handler
-                0x080001d8                HardFault_Handler
-                0x080001d8                SysTick_Handler
-                0x080001d8                I2C1_Handler
-                0x080001d8                PendSV_Handler
-                0x080001d8                NMI_Handler
-                0x080001d8                ADC_Handler
-                0x080001d8                WWDG_Handler
-                0x080001d8                RTC_Handler
-                0x080001d8                TIM1_CC_Handler
-                0x080001d8                EXTI4_15_Handler
-                0x080001d8                DMA_CH4_5_Handler
-                0x080001d8                USB_Handler
-                0x080001d8                USART1_Handler
-                0x080001d8                TIM3_Handler
-                0x080001d8                Default_Handler
-                0x080001d8                TIM17_Handler
-                0x080001d8                EXTI0_1_Handler
-                0x080001d8                DMA_CH1_Handler
-                0x080001d8                SPI2_Handler
-                0x080001d8                DMA_CH2_3_Handler
-                0x080001d8                TIM16_Handler
-                0x080001d8                I2C2_Handler
-                0x080001d8                TIM14_Handler
-                0x080001d8                USART2_Handler
-                0x080001d8                SPI1_Handler
-                0x080001d8                RCC_Handler
-                0x080001d8                TIM15_Handler
-                0x080001d8                TIM1_BRK_UP_TRG_COM_Handler
-                0x080001d8                TIM6_Handler
+                0x0800010c                toggle_led
+ .text          0x08000128       0x94 stm32_startup.o
+                0x08000128                Reset_Handler
+                0x080001b4                FLASH_Handler
+                0x080001b4                EXTI2_3_Handler
+                0x080001b4                SVCall_Handler
+                0x080001b4                USART3_4_5_6_Handler
+                0x080001b4                HardFault_Handler
+                0x080001b4                SysTick_Handler
+                0x080001b4                I2C1_Handler
+                0x080001b4                PendSV_Handler
+                0x080001b4                NMI_Handler
+                0x080001b4                ADC_Handler
+                0x080001b4                WWDG_Handler
+                0x080001b4                RTC_Handler
+                0x080001b4                TIM1_CC_Handler
+                0x080001b4                EXTI4_15_Handler
+                0x080001b4                DMA_CH4_5_Handler
+                0x080001b4                USB_Handler
+                0x080001b4                USART1_Handler
+                0x080001b4                TIM3_Handler
+                0x080001b4                Default_Handler
+                0x080001b4                TIM17_Handler
+                0x080001b4                EXTI0_1_Handler
+                0x080001b4                DMA_CH1_Handler
+                0x080001b4                SPI2_Handler
+                0x080001b4                DMA_CH2_3_Handler
+                0x080001b4                TIM16_Handler
+                0x080001b4                I2C2_Handler
+                0x080001b4                TIM14_Handler
+                0x080001b4                USART2_Handler
+                0x080001b4                SPI1_Handler
+                0x080001b4                RCC_Handler
+                0x080001b4                TIM15_Handler
+                0x080001b4                TIM1_BRK_UP_TRG_COM_Handler
+                0x080001b4                TIM6_Handler
  *(.rodata)
-                0x080001e0                . = ALIGN (0x4)
-                0x080001e0                _etext = .
+                0x080001bc                . = ALIGN (0x4)
+                0x080001bc                _etext = .
 
-.glue_7         0x080001e0        0x0
- .glue_7        0x080001e0        0x0 linker stubs
+.glue_7         0x080001bc        0x0
+ .glue_7        0x080001bc        0x0 linker stubs
 
-.glue_7t        0x080001e0        0x0
- .glue_7t       0x080001e0        0x0 linker stubs
+.glue_7t        0x080001bc        0x0
+ .glue_7t       0x080001bc        0x0 linker stubs
 
-.vfp11_veneer   0x080001e0        0x0
- .vfp11_veneer  0x080001e0        0x0 linker stubs
+.vfp11_veneer   0x080001bc        0x0
+ .vfp11_veneer  0x080001bc        0x0 linker stubs
 
-.v4_bx          0x080001e0        0x0
- .v4_bx         0x080001e0        0x0 linker stubs
+.v4_bx          0x080001bc        0x0
+ .v4_bx         0x080001bc        0x0 linker stubs
 
-.iplt           0x080001e0        0x0
- .iplt          0x080001e0        0x0 main.o
+.iplt           0x080001bc        0x0
+ .iplt          0x080001bc        0x0 main.o
 
-.rel.dyn        0x080001e0        0x0
- .rel.iplt      0x080001e0        0x0 main.o
+.rel.dyn        0x080001bc        0x0
+ .rel.iplt      0x080001bc        0x0 main.o
 
-.data           0x20000000        0x0 load address 0x080001e0
+.data           0x20000000        0x0 load address 0x080001bc
                 0x20000000                _sdata = .
  *(.data)
  .data          0x20000000        0x0 main.o
@@ -85,10 +85,10 @@ LOAD stm32_startup.o
                 0x20000000                . = ALIGN (0x4)
                 0x20000000                _edata = .
 
-.igot.plt       0x20000000        0x0 load address 0x080001e0
+.igot.plt       0x20000000        0x0 load address 0x080001bc
  .igot.plt      0x20000000        0x0 main.o
 
-.bss            0x20000000        0x0 load address 0x080001e0
+.bss            0x20000000        0x0 load address 0x080001bc
                 0x20000000                _sbss = .
  *(.bss)
  .bss           0x20000000        0x0 main.o
