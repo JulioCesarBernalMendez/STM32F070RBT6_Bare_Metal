@@ -39,5 +39,5 @@ void GPIOA_Init( void )
 
 void toggle_led( void )
 {
-    GPIOA->ODR ^= ( 1 << 5 );
+    GPIOA->ODR ^= LED_PIN;
 }

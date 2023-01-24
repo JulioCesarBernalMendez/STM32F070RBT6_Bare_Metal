@@ -1,8 +1,8 @@
 #include <stdint.h>
 
-#define SRAM_START       0x20000000U
-#define SRAM_SIZE        ( 16U * 1024U ) /* 16 KB */
-#define SRAM_END         ( ( SRAM_START ) + ( SRAM_SIZE ) - 1 )
+#define SRAM_START       (0x20000000U)
+#define SRAM_SIZE        (16U * 1024U) /* 16 KB */
+#define SRAM_END         ((SRAM_START) + (SRAM_SIZE) - 1)
 
 #define STACK_PTR_START  SRAM_END
 
@@ -50,48 +50,56 @@ void USART3_4_5_6_Handler         ( void ) __attribute__ ( ( weak, alias( "Defau
 void USB_Handler                  ( void ) __attribute__ ( ( weak, alias( "Default_Handler" ) ) );
 
 /* vector table array (relocated to .isr_vector user defined section) */
-uint32_t vector_table[] __attribute__ ( ( section( ".vector_table" ) ) ) =
+uint32_t vector_table[] __attribute__ ( ( section( ".isr_vector" ) ) ) =
 {
     STACK_PTR_START,
-    ( uint32_t ) Reset_Handler,
-    ( uint32_t ) NMI_Handler,
-    ( uint32_t ) HardFault_Handler,
-    ( uint32_t ) SVCall_Handler,
-    ( uint32_t ) PendSV_Handler,
-    ( uint32_t ) SysTick_Handler,
-    ( uint32_t ) WWDG_Handler,
-    0,
-    ( uint32_t ) RTC_Handler,
-    ( uint32_t ) FLASH_Handler,
-    ( uint32_t ) RCC_Handler,
-    ( uint32_t ) EXTI0_1_Handler,
-    ( uint32_t ) EXTI2_3_Handler,
-    ( uint32_t ) EXTI4_15_Handler,
-    0,
-    ( uint32_t ) DMA_CH1_Handler,
-    ( uint32_t ) DMA_CH2_3_Handler,
-    ( uint32_t ) DMA_CH4_5_Handler,
-    ( uint32_t ) ADC_Handler,
-    ( uint32_t ) TIM1_BRK_UP_TRG_COM_Handler,
-    ( uint32_t ) TIM1_CC_Handler,
-    0,
-    ( uint32_t ) TIM3_Handler,
-    ( uint32_t ) TIM6_Handler,
+    ( uint32_t ) Reset_Handler,                 /* address 0x00000004 */
+    ( uint32_t ) NMI_Handler,                   /* address 0x00000008 */
+    ( uint32_t ) HardFault_Handler,             /* address 0x0000000C */
     0,
     0,
-    ( uint32_t ) TIM14_Handler,
-    ( uint32_t ) TIM15_Handler,
-    ( uint32_t ) TIM16_Handler,
-    ( uint32_t ) TIM17_Handler,
-    ( uint32_t ) I2C1_Handler,
-    ( uint32_t ) I2C2_Handler,
-    ( uint32_t ) SPI1_Handler,
-    ( uint32_t ) SPI2_Handler,
-    ( uint32_t ) USART1_Handler,
-    ( uint32_t ) USART2_Handler,
-    ( uint32_t ) USART3_4_5_6_Handler,
     0,
-    ( uint32_t ) USB_Handler
+    0,
+    0,
+    0,
+    0,
+    ( uint32_t ) SVCall_Handler,                /* address 0x0000002C */
+    0,
+    0,
+    ( uint32_t ) PendSV_Handler,                /* address 0x00000038 */
+    ( uint32_t ) SysTick_Handler,               /* address 0x0000003C */
+    ( uint32_t ) WWDG_Handler,                  /* address 0x00000040 */
+    0,
+    ( uint32_t ) RTC_Handler,                   /* address 0x00000048 */
+    ( uint32_t ) FLASH_Handler,                 /* address 0x0000004C */
+    ( uint32_t ) RCC_Handler,                   /* address 0x00000050 */
+    ( uint32_t ) EXTI0_1_Handler,               /* address 0x00000054 */
+    ( uint32_t ) EXTI2_3_Handler,               /* address 0x00000058 */
+    ( uint32_t ) EXTI4_15_Handler,              /* address 0x0000005C */
+    0,
+    ( uint32_t ) DMA_CH1_Handler,               /* address 0x00000064 */
+    ( uint32_t ) DMA_CH2_3_Handler,             /* address 0x00000068 */
+    ( uint32_t ) DMA_CH4_5_Handler,             /* address 0x0000006C */
+    ( uint32_t ) ADC_Handler,                   /* address 0x00000070 */
+    ( uint32_t ) TIM1_BRK_UP_TRG_COM_Handler,   /* address 0x00000074 */
+    ( uint32_t ) TIM1_CC_Handler,               /* address 0x00000078 */
+    0,
+    ( uint32_t ) TIM3_Handler,                  /* address 0x00000080 */
+    ( uint32_t ) TIM6_Handler,                  /* address 0x00000084 */
+    0,
+    ( uint32_t ) TIM14_Handler,                 /* address 0x0000008C */
+    ( uint32_t ) TIM15_Handler,                 /* address 0x00000090 */
+    ( uint32_t ) TIM16_Handler,                 /* address 0x00000094 */
+    ( uint32_t ) TIM17_Handler,                 /* address 0x00000098 */
+    ( uint32_t ) I2C1_Handler,                  /* address 0x0000009C */
+    ( uint32_t ) I2C2_Handler,                  /* address 0x000000A0 */
+    ( uint32_t ) SPI1_Handler,                  /* address 0x000000A4 */
+    ( uint32_t ) SPI2_Handler,                  /* address 0x000000A8 */
+    ( uint32_t ) USART1_Handler,                /* address 0x000000AC */
+    ( uint32_t ) USART2_Handler,                /* address 0x000000B0 */
+    ( uint32_t ) USART3_4_5_6_Handler,          /* address 0x000000B4 */
+    0,
+    ( uint32_t ) USB_Handler                    /* address 0x000000BC */
 };
 
 void Reset_Handler( void )

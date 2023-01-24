@@ -10,7 +10,7 @@ SECTIONS
 {
     .text :
     {
-        *( .vector_table )
+        *( .isr_vector )
         *( .text )
         *( .rodata )
         . = ALIGN( 4 );
