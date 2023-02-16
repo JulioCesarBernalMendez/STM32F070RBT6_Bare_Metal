@@ -320,24 +320,24 @@ void TIM15_Init( void )
  80002a6:	430a      	orrs	r2, r1
  80002a8:	601a      	str	r2, [r3, #0]
 
-    /* TIM15 UEV (update event) generation enabled */
-    TIM15->CR1 &= ~TIM_CR1_UDIS;
- 80002aa:	4b1e      	ldr	r3, [pc, #120]	; (8000324 <TIM15_Init+0x160>)
- 80002ac:	681a      	ldr	r2, [r3, #0]
- 80002ae:	4b1d      	ldr	r3, [pc, #116]	; (8000324 <TIM15_Init+0x160>)
- 80002b0:	2102      	movs	r1, #2
- 80002b2:	438a      	bics	r2, r1
- 80002b4:	601a      	str	r2, [r3, #0]
-
-    /* TIM15 compare preloaded control enabled.
+    /* TIM15 compare preloaded control disabled.
        CC1E, CC1NE (not implemented) and OC1M bits are preloaded */
     TIM15->CR2 &= ~TIM_CR2_CCPC;
+ 80002aa:	4b1e      	ldr	r3, [pc, #120]	; (8000324 <TIM15_Init+0x160>)
+ 80002ac:	685a      	ldr	r2, [r3, #4]
+ 80002ae:	4b1d      	ldr	r3, [pc, #116]	; (8000324 <TIM15_Init+0x160>)
+ 80002b0:	2101      	movs	r1, #1
+ 80002b2:	438a      	bics	r2, r1
+ 80002b4:	605a      	str	r2, [r3, #4]
+
+    /* TIM15 UEV (update event) generation enabled */
+    TIM15->CR1 &= ~TIM_CR1_UDIS;
  80002b6:	4b1b      	ldr	r3, [pc, #108]	; (8000324 <TIM15_Init+0x160>)
- 80002b8:	685a      	ldr	r2, [r3, #4]
+ 80002b8:	681a      	ldr	r2, [r3, #0]
  80002ba:	4b1a      	ldr	r3, [pc, #104]	; (8000324 <TIM15_Init+0x160>)
- 80002bc:	2101      	movs	r1, #1
+ 80002bc:	2102      	movs	r1, #2
  80002be:	438a      	bics	r2, r1
- 80002c0:	605a      	str	r2, [r3, #4]
+ 80002c0:	601a      	str	r2, [r3, #0]
 
     /* TIM15 repetition counter set to 0.
        Each time this counter reaches zero an update event (UEV) is generated.

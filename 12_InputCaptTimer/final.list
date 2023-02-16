@@ -526,7 +526,7 @@ void TIM15_Init( void )
  8000416:	430a      	orrs	r2, r1
  8000418:	601a      	str	r2, [r3, #0]
 
-    /* TIM15 compare preloaded control enabled.
+    /* TIM15 compare preloaded control disabled.
        CC1E, CC1NE (not implemented) and OC1M bits are not preloaded */
     TIM15->CR2 &= ~TIM_CR2_CCPC;
  800041a:	4b1b      	ldr	r3, [pc, #108]	; (8000488 <TIM15_Init+0x160>)
@@ -783,7 +783,7 @@ void TIM16_Init( void )
  8000590:	430a      	orrs	r2, r1
  8000592:	601a      	str	r2, [r3, #0]
     
-    /* TIM16 compare preloaded control enabled.
+    /* TIM16 compare preloaded control disabled.
        CC1E, CC1NE (not implemented) and OC1M bits are not preloaded */
     TIM16->CR2 &= ~TIM_CR2_CCPC;
  8000594:	4b1c      	ldr	r3, [pc, #112]	; (8000608 <TIM16_Init+0x174>)
