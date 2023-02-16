@@ -96,12 +96,12 @@ void TIM15_Init( void )
     /* TIM15 auto-reload preload enabled */
     TIM15->CR1 |= TIM_CR1_ARPE;
 
-    /* TIM15 UEV (update event) generation enabled */
-    TIM15->CR1 &= ~TIM_CR1_UDIS;
-
-    /* TIM15 compare preloaded control enabled.
+    /* TIM15 compare preloaded control disabled.
        CC1E, CC1NE (not implemented) and OC1M bits are preloaded */
     TIM15->CR2 &= ~TIM_CR2_CCPC;
+
+    /* TIM15 UEV (update event) generation enabled */
+    TIM15->CR1 &= ~TIM_CR1_UDIS;
 
     /* TIM15 repetition counter set to 0.
        Each time this counter reaches zero an update event (UEV) is generated.

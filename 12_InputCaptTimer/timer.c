@@ -99,7 +99,7 @@ void TIM15_Init( void )
     /* TIM15 auto-reload preload enabled */
     TIM15->CR1 |= TIM_CR1_ARPE;
 
-    /* TIM15 compare preloaded control enabled.
+    /* TIM15 compare preloaded control disabled.
        CC1E, CC1NE (not implemented) and OC1M bits are not preloaded */
     TIM15->CR2 &= ~TIM_CR2_CCPC;
 
@@ -175,7 +175,7 @@ void TIM16_Init( void )
     /* TIM16 auto-reload preload enabled */
     TIM16->CR1 |= TIM_CR1_ARPE;
     
-    /* TIM16 compare preloaded control enabled.
+    /* TIM16 compare preloaded control disabled.
        CC1E, CC1NE (not implemented) and OC1M bits are not preloaded */
     TIM16->CR2 &= ~TIM_CR2_CCPC;
 
