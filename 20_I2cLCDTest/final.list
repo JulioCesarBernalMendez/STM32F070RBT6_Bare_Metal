@@ -1,0 +1,1378 @@
+
+final.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+080000c0 <deregister_tm_clones>:
+ 80000c0:	4804      	ldr	r0, [pc, #16]	; (80000d4 <deregister_tm_clones+0x14>)
+ 80000c2:	4b05      	ldr	r3, [pc, #20]	; (80000d8 <deregister_tm_clones+0x18>)
+ 80000c4:	b510      	push	{r4, lr}
+ 80000c6:	4283      	cmp	r3, r0
+ 80000c8:	d003      	beq.n	80000d2 <deregister_tm_clones+0x12>
+ 80000ca:	4b04      	ldr	r3, [pc, #16]	; (80000dc <deregister_tm_clones+0x1c>)
+ 80000cc:	2b00      	cmp	r3, #0
+ 80000ce:	d000      	beq.n	80000d2 <deregister_tm_clones+0x12>
+ 80000d0:	4798      	blx	r3
+ 80000d2:	bd10      	pop	{r4, pc}
+ 80000d4:	20000000 	.word	0x20000000
+ 80000d8:	20000000 	.word	0x20000000
+ 80000dc:	00000000 	.word	0x00000000
+
+080000e0 <register_tm_clones>:
+ 80000e0:	4806      	ldr	r0, [pc, #24]	; (80000fc <register_tm_clones+0x1c>)
+ 80000e2:	4907      	ldr	r1, [pc, #28]	; (8000100 <register_tm_clones+0x20>)
+ 80000e4:	1a09      	subs	r1, r1, r0
+ 80000e6:	108b      	asrs	r3, r1, #2
+ 80000e8:	0fc9      	lsrs	r1, r1, #31
+ 80000ea:	18c9      	adds	r1, r1, r3
+ 80000ec:	b510      	push	{r4, lr}
+ 80000ee:	1049      	asrs	r1, r1, #1
+ 80000f0:	d003      	beq.n	80000fa <register_tm_clones+0x1a>
+ 80000f2:	4b04      	ldr	r3, [pc, #16]	; (8000104 <register_tm_clones+0x24>)
+ 80000f4:	2b00      	cmp	r3, #0
+ 80000f6:	d000      	beq.n	80000fa <register_tm_clones+0x1a>
+ 80000f8:	4798      	blx	r3
+ 80000fa:	bd10      	pop	{r4, pc}
+ 80000fc:	20000000 	.word	0x20000000
+ 8000100:	20000000 	.word	0x20000000
+ 8000104:	00000000 	.word	0x00000000
+
+08000108 <__do_global_dtors_aux>:
+ 8000108:	b510      	push	{r4, lr}
+ 800010a:	4c07      	ldr	r4, [pc, #28]	; (8000128 <__do_global_dtors_aux+0x20>)
+ 800010c:	7823      	ldrb	r3, [r4, #0]
+ 800010e:	2b00      	cmp	r3, #0
+ 8000110:	d109      	bne.n	8000126 <__do_global_dtors_aux+0x1e>
+ 8000112:	f7ff ffd5 	bl	80000c0 <deregister_tm_clones>
+ 8000116:	4b05      	ldr	r3, [pc, #20]	; (800012c <__do_global_dtors_aux+0x24>)
+ 8000118:	2b00      	cmp	r3, #0
+ 800011a:	d002      	beq.n	8000122 <__do_global_dtors_aux+0x1a>
+ 800011c:	4804      	ldr	r0, [pc, #16]	; (8000130 <__do_global_dtors_aux+0x28>)
+ 800011e:	e000      	b.n	8000122 <__do_global_dtors_aux+0x1a>
+ 8000120:	bf00      	nop
+ 8000122:	2301      	movs	r3, #1
+ 8000124:	7023      	strb	r3, [r4, #0]
+ 8000126:	bd10      	pop	{r4, pc}
+ 8000128:	20000000 	.word	0x20000000
+ 800012c:	00000000 	.word	0x00000000
+ 8000130:	08000958 	.word	0x08000958
+
+08000134 <frame_dummy>:
+ 8000134:	4b05      	ldr	r3, [pc, #20]	; (800014c <frame_dummy+0x18>)
+ 8000136:	b510      	push	{r4, lr}
+ 8000138:	2b00      	cmp	r3, #0
+ 800013a:	d003      	beq.n	8000144 <frame_dummy+0x10>
+ 800013c:	4904      	ldr	r1, [pc, #16]	; (8000150 <frame_dummy+0x1c>)
+ 800013e:	4805      	ldr	r0, [pc, #20]	; (8000154 <frame_dummy+0x20>)
+ 8000140:	e000      	b.n	8000144 <frame_dummy+0x10>
+ 8000142:	bf00      	nop
+ 8000144:	f7ff ffcc 	bl	80000e0 <register_tm_clones>
+ 8000148:	bd10      	pop	{r4, pc}
+ 800014a:	46c0      	nop			; (mov r8, r8)
+ 800014c:	00000000 	.word	0x00000000
+ 8000150:	20000004 	.word	0x20000004
+ 8000154:	08000958 	.word	0x08000958
+
+08000158 <main>:
+   handling of the LCD */
+
+#include "main.h"
+
+int main( void )
+{   
+ 8000158:	b580      	push	{r7, lr}
+ 800015a:	b082      	sub	sp, #8
+ 800015c:	af00      	add	r7, sp, #0
+    /* initialize SysTick */
+    SysTick_Init();
+ 800015e:	f000 fa55 	bl	800060c <SysTick_Init>
+
+    /* inititalize I2C1 */
+    I2C1_Init();
+ 8000162:	f000 fa97 	bl	8000694 <I2C1_Init>
+     *                    LCD INITIALIZATION                 *
+     *********************************************************/
+    uint8_t i2cByte;
+
+    /* wait 41 ms */
+    Systick_Delay_Ms( 41 );
+ 8000166:	2029      	movs	r0, #41	; 0x29
+ 8000168:	f000 fa6a 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x = N -- NOT USED
+       DB2       = x = F -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+    i2cByte = 0x30; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 800016c:	1dfb      	adds	r3, r7, #7
+ 800016e:	2230      	movs	r2, #48	; 0x30
+ 8000170:	701a      	strb	r2, [r3, #0]
+ 8000172:	1dfb      	adds	r3, r7, #7
+ 8000174:	2201      	movs	r2, #1
+ 8000176:	0019      	movs	r1, r3
+ 8000178:	2027      	movs	r0, #39	; 0x27
+ 800017a:	f000 fb75 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 800017e:	2001      	movs	r0, #1
+ 8000180:	f000 fa5e 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x34; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 8000184:	1dfb      	adds	r3, r7, #7
+ 8000186:	2234      	movs	r2, #52	; 0x34
+ 8000188:	701a      	strb	r2, [r3, #0]
+ 800018a:	1dfb      	adds	r3, r7, #7
+ 800018c:	2201      	movs	r2, #1
+ 800018e:	0019      	movs	r1, r3
+ 8000190:	2027      	movs	r0, #39	; 0x27
+ 8000192:	f000 fb69 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 8000196:	2001      	movs	r0, #1
+ 8000198:	f000 fa52 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x30; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 800019c:	1dfb      	adds	r3, r7, #7
+ 800019e:	2230      	movs	r2, #48	; 0x30
+ 80001a0:	701a      	strb	r2, [r3, #0]
+ 80001a2:	1dfb      	adds	r3, r7, #7
+ 80001a4:	2201      	movs	r2, #1
+ 80001a6:	0019      	movs	r1, r3
+ 80001a8:	2027      	movs	r0, #39	; 0x27
+ 80001aa:	f000 fb5d 	bl	8000868 <I2C1_Write>
+
+    /* wait 1 ms */
+    Systick_Delay_Ms( 1 );
+ 80001ae:	2001      	movs	r0, #1
+ 80001b0:	f000 fa46 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+    i2cByte = 0x20; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 80001b4:	1dfb      	adds	r3, r7, #7
+ 80001b6:	2220      	movs	r2, #32
+ 80001b8:	701a      	strb	r2, [r3, #0]
+ 80001ba:	1dfb      	adds	r3, r7, #7
+ 80001bc:	2201      	movs	r2, #1
+ 80001be:	0019      	movs	r1, r3
+ 80001c0:	2027      	movs	r0, #39	; 0x27
+ 80001c2:	f000 fb51 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80001c6:	2001      	movs	r0, #1
+ 80001c8:	f000 fa3a 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x24; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 80001cc:	1dfb      	adds	r3, r7, #7
+ 80001ce:	2224      	movs	r2, #36	; 0x24
+ 80001d0:	701a      	strb	r2, [r3, #0]
+ 80001d2:	1dfb      	adds	r3, r7, #7
+ 80001d4:	2201      	movs	r2, #1
+ 80001d6:	0019      	movs	r1, r3
+ 80001d8:	2027      	movs	r0, #39	; 0x27
+ 80001da:	f000 fb45 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80001de:	2001      	movs	r0, #1
+ 80001e0:	f000 fa2e 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x20; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 80001e4:	1dfb      	adds	r3, r7, #7
+ 80001e6:	2220      	movs	r2, #32
+ 80001e8:	701a      	strb	r2, [r3, #0]
+ 80001ea:	1dfb      	adds	r3, r7, #7
+ 80001ec:	2201      	movs	r2, #1
+ 80001ee:	0019      	movs	r1, r3
+ 80001f0:	2027      	movs	r0, #39	; 0x27
+ 80001f2:	f000 fb39 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80001f6:	2001      	movs	r0, #1
+ 80001f8:	f000 fa22 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+    i2cByte = 0x80; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 80001fc:	1dfb      	adds	r3, r7, #7
+ 80001fe:	2280      	movs	r2, #128	; 0x80
+ 8000200:	701a      	strb	r2, [r3, #0]
+ 8000202:	1dfb      	adds	r3, r7, #7
+ 8000204:	2201      	movs	r2, #1
+ 8000206:	0019      	movs	r1, r3
+ 8000208:	2027      	movs	r0, #39	; 0x27
+ 800020a:	f000 fb2d 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 800020e:	2001      	movs	r0, #1
+ 8000210:	f000 fa16 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x84; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 8000214:	1dfb      	adds	r3, r7, #7
+ 8000216:	2284      	movs	r2, #132	; 0x84
+ 8000218:	701a      	strb	r2, [r3, #0]
+ 800021a:	1dfb      	adds	r3, r7, #7
+ 800021c:	2201      	movs	r2, #1
+ 800021e:	0019      	movs	r1, r3
+ 8000220:	2027      	movs	r0, #39	; 0x27
+ 8000222:	f000 fb21 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 8000226:	2001      	movs	r0, #1
+ 8000228:	f000 fa0a 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x80; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 800022c:	1dfb      	adds	r3, r7, #7
+ 800022e:	2280      	movs	r2, #128	; 0x80
+ 8000230:	701a      	strb	r2, [r3, #0]
+ 8000232:	1dfb      	adds	r3, r7, #7
+ 8000234:	2201      	movs	r2, #1
+ 8000236:	0019      	movs	r1, r3
+ 8000238:	2027      	movs	r0, #39	; 0x27
+ 800023a:	f000 fb15 	bl	8000868 <I2C1_Write>
+
+    /* wait 1 ms */
+    Systick_Delay_Ms( 1 );
+ 800023e:	2001      	movs	r0, #1
+ 8000240:	f000 f9fe 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+    i2cByte = 0x20; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 8000244:	1dfb      	adds	r3, r7, #7
+ 8000246:	2220      	movs	r2, #32
+ 8000248:	701a      	strb	r2, [r3, #0]
+ 800024a:	1dfb      	adds	r3, r7, #7
+ 800024c:	2201      	movs	r2, #1
+ 800024e:	0019      	movs	r1, r3
+ 8000250:	2027      	movs	r0, #39	; 0x27
+ 8000252:	f000 fb09 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 8000256:	2001      	movs	r0, #1
+ 8000258:	f000 f9f2 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x24; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 800025c:	1dfb      	adds	r3, r7, #7
+ 800025e:	2224      	movs	r2, #36	; 0x24
+ 8000260:	701a      	strb	r2, [r3, #0]
+ 8000262:	1dfb      	adds	r3, r7, #7
+ 8000264:	2201      	movs	r2, #1
+ 8000266:	0019      	movs	r1, r3
+ 8000268:	2027      	movs	r0, #39	; 0x27
+ 800026a:	f000 fafd 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 800026e:	2001      	movs	r0, #1
+ 8000270:	f000 f9e6 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x20; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 8000274:	1dfb      	adds	r3, r7, #7
+ 8000276:	2220      	movs	r2, #32
+ 8000278:	701a      	strb	r2, [r3, #0]
+ 800027a:	1dfb      	adds	r3, r7, #7
+ 800027c:	2201      	movs	r2, #1
+ 800027e:	0019      	movs	r1, r3
+ 8000280:	2027      	movs	r0, #39	; 0x27
+ 8000282:	f000 faf1 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 8000286:	2001      	movs	r0, #1
+ 8000288:	f000 f9da 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+    i2cByte = 0x80; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 800028c:	1dfb      	adds	r3, r7, #7
+ 800028e:	2280      	movs	r2, #128	; 0x80
+ 8000290:	701a      	strb	r2, [r3, #0]
+ 8000292:	1dfb      	adds	r3, r7, #7
+ 8000294:	2201      	movs	r2, #1
+ 8000296:	0019      	movs	r1, r3
+ 8000298:	2027      	movs	r0, #39	; 0x27
+ 800029a:	f000 fae5 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 800029e:	2001      	movs	r0, #1
+ 80002a0:	f000 f9ce 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x84; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 80002a4:	1dfb      	adds	r3, r7, #7
+ 80002a6:	2284      	movs	r2, #132	; 0x84
+ 80002a8:	701a      	strb	r2, [r3, #0]
+ 80002aa:	1dfb      	adds	r3, r7, #7
+ 80002ac:	2201      	movs	r2, #1
+ 80002ae:	0019      	movs	r1, r3
+ 80002b0:	2027      	movs	r0, #39	; 0x27
+ 80002b2:	f000 fad9 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80002b6:	2001      	movs	r0, #1
+ 80002b8:	f000 f9c2 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x80; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 80002bc:	1dfb      	adds	r3, r7, #7
+ 80002be:	2280      	movs	r2, #128	; 0x80
+ 80002c0:	701a      	strb	r2, [r3, #0]
+ 80002c2:	1dfb      	adds	r3, r7, #7
+ 80002c4:	2201      	movs	r2, #1
+ 80002c6:	0019      	movs	r1, r3
+ 80002c8:	2027      	movs	r0, #39	; 0x27
+ 80002ca:	f000 facd 	bl	8000868 <I2C1_Write>
+
+    /* wait 1 ms */
+    Systick_Delay_Ms( 1 );
+ 80002ce:	2001      	movs	r0, #1
+ 80002d0:	f000 f9b6 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+    i2cByte = 0x00; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 80002d4:	1dfb      	adds	r3, r7, #7
+ 80002d6:	2200      	movs	r2, #0
+ 80002d8:	701a      	strb	r2, [r3, #0]
+ 80002da:	1dfb      	adds	r3, r7, #7
+ 80002dc:	2201      	movs	r2, #1
+ 80002de:	0019      	movs	r1, r3
+ 80002e0:	2027      	movs	r0, #39	; 0x27
+ 80002e2:	f000 fac1 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80002e6:	2001      	movs	r0, #1
+ 80002e8:	f000 f9aa 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x04; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 80002ec:	1dfb      	adds	r3, r7, #7
+ 80002ee:	2204      	movs	r2, #4
+ 80002f0:	701a      	strb	r2, [r3, #0]
+ 80002f2:	1dfb      	adds	r3, r7, #7
+ 80002f4:	2201      	movs	r2, #1
+ 80002f6:	0019      	movs	r1, r3
+ 80002f8:	2027      	movs	r0, #39	; 0x27
+ 80002fa:	f000 fab5 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80002fe:	2001      	movs	r0, #1
+ 8000300:	f000 f99e 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x00; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 8000304:	1dfb      	adds	r3, r7, #7
+ 8000306:	2200      	movs	r2, #0
+ 8000308:	701a      	strb	r2, [r3, #0]
+ 800030a:	1dfb      	adds	r3, r7, #7
+ 800030c:	2201      	movs	r2, #1
+ 800030e:	0019      	movs	r1, r3
+ 8000310:	2027      	movs	r0, #39	; 0x27
+ 8000312:	f000 faa9 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 8000316:	2001      	movs	r0, #1
+ 8000318:	f000 f992 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+    i2cByte = 0xF0; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 800031c:	1dfb      	adds	r3, r7, #7
+ 800031e:	22f0      	movs	r2, #240	; 0xf0
+ 8000320:	701a      	strb	r2, [r3, #0]
+ 8000322:	1dfb      	adds	r3, r7, #7
+ 8000324:	2201      	movs	r2, #1
+ 8000326:	0019      	movs	r1, r3
+ 8000328:	2027      	movs	r0, #39	; 0x27
+ 800032a:	f000 fa9d 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 800032e:	2001      	movs	r0, #1
+ 8000330:	f000 f986 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0xF4; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 8000334:	1dfb      	adds	r3, r7, #7
+ 8000336:	22f4      	movs	r2, #244	; 0xf4
+ 8000338:	701a      	strb	r2, [r3, #0]
+ 800033a:	1dfb      	adds	r3, r7, #7
+ 800033c:	2201      	movs	r2, #1
+ 800033e:	0019      	movs	r1, r3
+ 8000340:	2027      	movs	r0, #39	; 0x27
+ 8000342:	f000 fa91 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 8000346:	2001      	movs	r0, #1
+ 8000348:	f000 f97a 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0xF0; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 800034c:	1dfb      	adds	r3, r7, #7
+ 800034e:	22f0      	movs	r2, #240	; 0xf0
+ 8000350:	701a      	strb	r2, [r3, #0]
+ 8000352:	1dfb      	adds	r3, r7, #7
+ 8000354:	2201      	movs	r2, #1
+ 8000356:	0019      	movs	r1, r3
+ 8000358:	2027      	movs	r0, #39	; 0x27
+ 800035a:	f000 fa85 	bl	8000868 <I2C1_Write>
+
+    /* wait 1 ms */
+    Systick_Delay_Ms( 1 );
+ 800035e:	2001      	movs	r0, #1
+ 8000360:	f000 f96e 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+    i2cByte = 0x00; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 8000364:	1dfb      	adds	r3, r7, #7
+ 8000366:	2200      	movs	r2, #0
+ 8000368:	701a      	strb	r2, [r3, #0]
+ 800036a:	1dfb      	adds	r3, r7, #7
+ 800036c:	2201      	movs	r2, #1
+ 800036e:	0019      	movs	r1, r3
+ 8000370:	2027      	movs	r0, #39	; 0x27
+ 8000372:	f000 fa79 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 8000376:	2001      	movs	r0, #1
+ 8000378:	f000 f962 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x04; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 800037c:	1dfb      	adds	r3, r7, #7
+ 800037e:	2204      	movs	r2, #4
+ 8000380:	701a      	strb	r2, [r3, #0]
+ 8000382:	1dfb      	adds	r3, r7, #7
+ 8000384:	2201      	movs	r2, #1
+ 8000386:	0019      	movs	r1, r3
+ 8000388:	2027      	movs	r0, #39	; 0x27
+ 800038a:	f000 fa6d 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 800038e:	2001      	movs	r0, #1
+ 8000390:	f000 f956 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x00; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 8000394:	1dfb      	adds	r3, r7, #7
+ 8000396:	2200      	movs	r2, #0
+ 8000398:	701a      	strb	r2, [r3, #0]
+ 800039a:	1dfb      	adds	r3, r7, #7
+ 800039c:	2201      	movs	r2, #1
+ 800039e:	0019      	movs	r1, r3
+ 80003a0:	2027      	movs	r0, #39	; 0x27
+ 80003a2:	f000 fa61 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80003a6:	2001      	movs	r0, #1
+ 80003a8:	f000 f94a 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+    i2cByte = 0x10; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 80003ac:	1dfb      	adds	r3, r7, #7
+ 80003ae:	2210      	movs	r2, #16
+ 80003b0:	701a      	strb	r2, [r3, #0]
+ 80003b2:	1dfb      	adds	r3, r7, #7
+ 80003b4:	2201      	movs	r2, #1
+ 80003b6:	0019      	movs	r1, r3
+ 80003b8:	2027      	movs	r0, #39	; 0x27
+ 80003ba:	f000 fa55 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80003be:	2001      	movs	r0, #1
+ 80003c0:	f000 f93e 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x14; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 80003c4:	1dfb      	adds	r3, r7, #7
+ 80003c6:	2214      	movs	r2, #20
+ 80003c8:	701a      	strb	r2, [r3, #0]
+ 80003ca:	1dfb      	adds	r3, r7, #7
+ 80003cc:	2201      	movs	r2, #1
+ 80003ce:	0019      	movs	r1, r3
+ 80003d0:	2027      	movs	r0, #39	; 0x27
+ 80003d2:	f000 fa49 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80003d6:	2001      	movs	r0, #1
+ 80003d8:	f000 f932 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x10; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 80003dc:	1dfb      	adds	r3, r7, #7
+ 80003de:	2210      	movs	r2, #16
+ 80003e0:	701a      	strb	r2, [r3, #0]
+ 80003e2:	1dfb      	adds	r3, r7, #7
+ 80003e4:	2201      	movs	r2, #1
+ 80003e6:	0019      	movs	r1, r3
+ 80003e8:	2027      	movs	r0, #39	; 0x27
+ 80003ea:	f000 fa3d 	bl	8000868 <I2C1_Write>
+
+    /* wait 2 ms */
+    Systick_Delay_Ms( 2 );
+ 80003ee:	2002      	movs	r0, #2
+ 80003f0:	f000 f926 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+    i2cByte = 0x00; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 80003f4:	1dfb      	adds	r3, r7, #7
+ 80003f6:	2200      	movs	r2, #0
+ 80003f8:	701a      	strb	r2, [r3, #0]
+ 80003fa:	1dfb      	adds	r3, r7, #7
+ 80003fc:	2201      	movs	r2, #1
+ 80003fe:	0019      	movs	r1, r3
+ 8000400:	2027      	movs	r0, #39	; 0x27
+ 8000402:	f000 fa31 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 8000406:	2001      	movs	r0, #1
+ 8000408:	f000 f91a 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x04; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 800040c:	1dfb      	adds	r3, r7, #7
+ 800040e:	2204      	movs	r2, #4
+ 8000410:	701a      	strb	r2, [r3, #0]
+ 8000412:	1dfb      	adds	r3, r7, #7
+ 8000414:	2201      	movs	r2, #1
+ 8000416:	0019      	movs	r1, r3
+ 8000418:	2027      	movs	r0, #39	; 0x27
+ 800041a:	f000 fa25 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 800041e:	2001      	movs	r0, #1
+ 8000420:	f000 f90e 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x00; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 8000424:	1dfb      	adds	r3, r7, #7
+ 8000426:	2200      	movs	r2, #0
+ 8000428:	701a      	strb	r2, [r3, #0]
+ 800042a:	1dfb      	adds	r3, r7, #7
+ 800042c:	2201      	movs	r2, #1
+ 800042e:	0019      	movs	r1, r3
+ 8000430:	2027      	movs	r0, #39	; 0x27
+ 8000432:	f000 fa19 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 8000436:	2001      	movs	r0, #1
+ 8000438:	f000 f902 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+    i2cByte = 0x60; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 800043c:	1dfb      	adds	r3, r7, #7
+ 800043e:	2260      	movs	r2, #96	; 0x60
+ 8000440:	701a      	strb	r2, [r3, #0]
+ 8000442:	1dfb      	adds	r3, r7, #7
+ 8000444:	2201      	movs	r2, #1
+ 8000446:	0019      	movs	r1, r3
+ 8000448:	2027      	movs	r0, #39	; 0x27
+ 800044a:	f000 fa0d 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 800044e:	2001      	movs	r0, #1
+ 8000450:	f000 f8f6 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x64; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 8000454:	1dfb      	adds	r3, r7, #7
+ 8000456:	2264      	movs	r2, #100	; 0x64
+ 8000458:	701a      	strb	r2, [r3, #0]
+ 800045a:	1dfb      	adds	r3, r7, #7
+ 800045c:	2201      	movs	r2, #1
+ 800045e:	0019      	movs	r1, r3
+ 8000460:	2027      	movs	r0, #39	; 0x27
+ 8000462:	f000 fa01 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 8000466:	2001      	movs	r0, #1
+ 8000468:	f000 f8ea 	bl	8000640 <Systick_Delay_Ms>
+    i2cByte = 0x68; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 800046c:	1dfb      	adds	r3, r7, #7
+ 800046e:	2268      	movs	r2, #104	; 0x68
+ 8000470:	701a      	strb	r2, [r3, #0]
+ 8000472:	1dfb      	adds	r3, r7, #7
+ 8000474:	2201      	movs	r2, #1
+ 8000476:	0019      	movs	r1, r3
+ 8000478:	2027      	movs	r0, #39	; 0x27
+ 800047a:	f000 f9f5 	bl	8000868 <I2C1_Write>
+    Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 800047e:	2001      	movs	r0, #1
+ 8000480:	f000 f8de 	bl	8000640 <Systick_Delay_Ms>
+
+
+
+    Systick_Delay_Ms( 20 ); /* for me to know (in Logic Analyzer) where the printing to LCD starts */
+ 8000484:	2014      	movs	r0, #20
+ 8000486:	f000 f8db 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+   i2cByte = 0xC8; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 800048a:	1dfb      	adds	r3, r7, #7
+ 800048c:	22c8      	movs	r2, #200	; 0xc8
+ 800048e:	701a      	strb	r2, [r3, #0]
+ 8000490:	1dfb      	adds	r3, r7, #7
+ 8000492:	2201      	movs	r2, #1
+ 8000494:	0019      	movs	r1, r3
+ 8000496:	2027      	movs	r0, #39	; 0x27
+ 8000498:	f000 f9e6 	bl	8000868 <I2C1_Write>
+   Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 800049c:	2001      	movs	r0, #1
+ 800049e:	f000 f8cf 	bl	8000640 <Systick_Delay_Ms>
+   i2cByte = 0xCC; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 80004a2:	1dfb      	adds	r3, r7, #7
+ 80004a4:	22cc      	movs	r2, #204	; 0xcc
+ 80004a6:	701a      	strb	r2, [r3, #0]
+ 80004a8:	1dfb      	adds	r3, r7, #7
+ 80004aa:	2201      	movs	r2, #1
+ 80004ac:	0019      	movs	r1, r3
+ 80004ae:	2027      	movs	r0, #39	; 0x27
+ 80004b0:	f000 f9da 	bl	8000868 <I2C1_Write>
+   Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80004b4:	2001      	movs	r0, #1
+ 80004b6:	f000 f8c3 	bl	8000640 <Systick_Delay_Ms>
+   i2cByte = 0xC8; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 80004ba:	1dfb      	adds	r3, r7, #7
+ 80004bc:	22c8      	movs	r2, #200	; 0xc8
+ 80004be:	701a      	strb	r2, [r3, #0]
+ 80004c0:	1dfb      	adds	r3, r7, #7
+ 80004c2:	2201      	movs	r2, #1
+ 80004c4:	0019      	movs	r1, r3
+ 80004c6:	2027      	movs	r0, #39	; 0x27
+ 80004c8:	f000 f9ce 	bl	8000868 <I2C1_Write>
+   Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80004cc:	2001      	movs	r0, #1
+ 80004ce:	f000 f8b7 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+   i2cByte = 0xF8; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 80004d2:	1dfb      	adds	r3, r7, #7
+ 80004d4:	22f8      	movs	r2, #248	; 0xf8
+ 80004d6:	701a      	strb	r2, [r3, #0]
+ 80004d8:	1dfb      	adds	r3, r7, #7
+ 80004da:	2201      	movs	r2, #1
+ 80004dc:	0019      	movs	r1, r3
+ 80004de:	2027      	movs	r0, #39	; 0x27
+ 80004e0:	f000 f9c2 	bl	8000868 <I2C1_Write>
+   Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80004e4:	2001      	movs	r0, #1
+ 80004e6:	f000 f8ab 	bl	8000640 <Systick_Delay_Ms>
+   i2cByte = 0xFC; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 80004ea:	1dfb      	adds	r3, r7, #7
+ 80004ec:	22fc      	movs	r2, #252	; 0xfc
+ 80004ee:	701a      	strb	r2, [r3, #0]
+ 80004f0:	1dfb      	adds	r3, r7, #7
+ 80004f2:	2201      	movs	r2, #1
+ 80004f4:	0019      	movs	r1, r3
+ 80004f6:	2027      	movs	r0, #39	; 0x27
+ 80004f8:	f000 f9b6 	bl	8000868 <I2C1_Write>
+   Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80004fc:	2001      	movs	r0, #1
+ 80004fe:	f000 f89f 	bl	8000640 <Systick_Delay_Ms>
+   i2cByte = 0xF8; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 8000502:	1dfb      	adds	r3, r7, #7
+ 8000504:	22f8      	movs	r2, #248	; 0xf8
+ 8000506:	701a      	strb	r2, [r3, #0]
+ 8000508:	1dfb      	adds	r3, r7, #7
+ 800050a:	2201      	movs	r2, #1
+ 800050c:	0019      	movs	r1, r3
+ 800050e:	2027      	movs	r0, #39	; 0x27
+ 8000510:	f000 f9aa 	bl	8000868 <I2C1_Write>
+   Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 8000514:	2001      	movs	r0, #1
+ 8000516:	f000 f893 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+   i2cByte = 0x49; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 800051a:	1dfb      	adds	r3, r7, #7
+ 800051c:	2249      	movs	r2, #73	; 0x49
+ 800051e:	701a      	strb	r2, [r3, #0]
+ 8000520:	1dfb      	adds	r3, r7, #7
+ 8000522:	2201      	movs	r2, #1
+ 8000524:	0019      	movs	r1, r3
+ 8000526:	2027      	movs	r0, #39	; 0x27
+ 8000528:	f000 f99e 	bl	8000868 <I2C1_Write>
+   Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 800052c:	2001      	movs	r0, #1
+ 800052e:	f000 f887 	bl	8000640 <Systick_Delay_Ms>
+   i2cByte = 0x4D; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 8000532:	1dfb      	adds	r3, r7, #7
+ 8000534:	224d      	movs	r2, #77	; 0x4d
+ 8000536:	701a      	strb	r2, [r3, #0]
+ 8000538:	1dfb      	adds	r3, r7, #7
+ 800053a:	2201      	movs	r2, #1
+ 800053c:	0019      	movs	r1, r3
+ 800053e:	2027      	movs	r0, #39	; 0x27
+ 8000540:	f000 f992 	bl	8000868 <I2C1_Write>
+   Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 8000544:	2001      	movs	r0, #1
+ 8000546:	f000 f87b 	bl	8000640 <Systick_Delay_Ms>
+   i2cByte = 0x49; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 800054a:	1dfb      	adds	r3, r7, #7
+ 800054c:	2249      	movs	r2, #73	; 0x49
+ 800054e:	701a      	strb	r2, [r3, #0]
+ 8000550:	1dfb      	adds	r3, r7, #7
+ 8000552:	2201      	movs	r2, #1
+ 8000554:	0019      	movs	r1, r3
+ 8000556:	2027      	movs	r0, #39	; 0x27
+ 8000558:	f000 f986 	bl	8000868 <I2C1_Write>
+   Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 800055c:	2001      	movs	r0, #1
+ 800055e:	f000 f86f 	bl	8000640 <Systick_Delay_Ms>
+
+       DB3       = x     -- NOT USED
+       DB2       = x     -- NOT USED
+       DB1       = x     -- NOT USED
+       DB0       = x     -- NOT USED */
+   i2cByte = 0x19; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 );
+ 8000562:	1dfb      	adds	r3, r7, #7
+ 8000564:	2219      	movs	r2, #25
+ 8000566:	701a      	strb	r2, [r3, #0]
+ 8000568:	1dfb      	adds	r3, r7, #7
+ 800056a:	2201      	movs	r2, #1
+ 800056c:	0019      	movs	r1, r3
+ 800056e:	2027      	movs	r0, #39	; 0x27
+ 8000570:	f000 f97a 	bl	8000868 <I2C1_Write>
+   Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 8000574:	2001      	movs	r0, #1
+ 8000576:	f000 f863 	bl	8000640 <Systick_Delay_Ms>
+   i2cByte = 0x1D; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 1, for ST066U to accept the data
+ 800057a:	1dfb      	adds	r3, r7, #7
+ 800057c:	221d      	movs	r2, #29
+ 800057e:	701a      	strb	r2, [r3, #0]
+ 8000580:	1dfb      	adds	r3, r7, #7
+ 8000582:	2201      	movs	r2, #1
+ 8000584:	0019      	movs	r1, r3
+ 8000586:	2027      	movs	r0, #39	; 0x27
+ 8000588:	f000 f96e 	bl	8000868 <I2C1_Write>
+   Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 800058c:	2001      	movs	r0, #1
+ 800058e:	f000 f857 	bl	8000640 <Systick_Delay_Ms>
+   i2cByte = 0x19; I2C1_Write( SLAVE_ADDRESS, &i2cByte, 1 ); // E = 0, reset E signal
+ 8000592:	1dfb      	adds	r3, r7, #7
+ 8000594:	2219      	movs	r2, #25
+ 8000596:	701a      	strb	r2, [r3, #0]
+ 8000598:	1dfb      	adds	r3, r7, #7
+ 800059a:	2201      	movs	r2, #1
+ 800059c:	0019      	movs	r1, r3
+ 800059e:	2027      	movs	r0, #39	; 0x27
+ 80005a0:	f000 f962 	bl	8000868 <I2C1_Write>
+   Systick_Delay_Ms( 1 ); /* wait 1 ms, for stop bit to be sent */
+ 80005a4:	2001      	movs	r0, #1
+ 80005a6:	f000 f84b 	bl	8000640 <Systick_Delay_Ms>
+
+    while( 1 )
+ 80005aa:	46c0      	nop			; (mov r8, r8)
+ 80005ac:	e7fd      	b.n	80005aa <main+0x452>
+
+080005ae <SystemInit>:
+  * @brief  Setup the microcontroller system.
+  * @param  None
+  * @retval None
+  */
+void SystemInit(void)
+{
+ 80005ae:	b580      	push	{r7, lr}
+ 80005b0:	af00      	add	r7, sp, #0
+                         before branch to main program. This call is made inside
+                         the "startup_stm32f0xx.s" file.
+                         User can setups the default system clock (System clock source, PLL Multiplier
+                         and Divider factors, AHB/APBx prescalers and Flash settings).
+   */
+}
+ 80005b2:	46c0      	nop			; (mov r8, r8)
+ 80005b4:	46bd      	mov	sp, r7
+ 80005b6:	bd80      	pop	{r7, pc}
+
+080005b8 <Reset_Handler>:
+ 80005b8:	480d      	ldr	r0, [pc, #52]	; (80005f0 <LoopForever+0x2>)
+ 80005ba:	4685      	mov	sp, r0
+ 80005bc:	480d      	ldr	r0, [pc, #52]	; (80005f4 <LoopForever+0x6>)
+ 80005be:	490e      	ldr	r1, [pc, #56]	; (80005f8 <LoopForever+0xa>)
+ 80005c0:	4a0e      	ldr	r2, [pc, #56]	; (80005fc <LoopForever+0xe>)
+ 80005c2:	2300      	movs	r3, #0
+ 80005c4:	e002      	b.n	80005cc <LoopCopyDataInit>
+
+080005c6 <CopyDataInit>:
+ 80005c6:	58d4      	ldr	r4, [r2, r3]
+ 80005c8:	50c4      	str	r4, [r0, r3]
+ 80005ca:	3304      	adds	r3, #4
+
+080005cc <LoopCopyDataInit>:
+ 80005cc:	18c4      	adds	r4, r0, r3
+ 80005ce:	428c      	cmp	r4, r1
+ 80005d0:	d3f9      	bcc.n	80005c6 <CopyDataInit>
+ 80005d2:	4a0b      	ldr	r2, [pc, #44]	; (8000600 <LoopForever+0x12>)
+ 80005d4:	4c0b      	ldr	r4, [pc, #44]	; (8000604 <LoopForever+0x16>)
+ 80005d6:	2300      	movs	r3, #0
+ 80005d8:	e001      	b.n	80005de <LoopFillZerobss>
+
+080005da <FillZerobss>:
+ 80005da:	6013      	str	r3, [r2, #0]
+ 80005dc:	3204      	adds	r2, #4
+
+080005de <LoopFillZerobss>:
+ 80005de:	42a2      	cmp	r2, r4
+ 80005e0:	d3fb      	bcc.n	80005da <FillZerobss>
+ 80005e2:	f7ff ffe4 	bl	80005ae <SystemInit>
+ 80005e6:	f000 f993 	bl	8000910 <__libc_init_array>
+ 80005ea:	f7ff fdb5 	bl	8000158 <main>
+
+080005ee <LoopForever>:
+ 80005ee:	e7fe      	b.n	80005ee <LoopForever>
+ 80005f0:	20004000 	.word	0x20004000
+ 80005f4:	20000000 	.word	0x20000000
+ 80005f8:	20000000 	.word	0x20000000
+ 80005fc:	08000978 	.word	0x08000978
+ 8000600:	20000000 	.word	0x20000000
+ 8000604:	2000001c 	.word	0x2000001c
+
+08000608 <ADC1_IRQHandler>:
+ 8000608:	e7fe      	b.n	8000608 <ADC1_IRQHandler>
+	...
+
+0800060c <SysTick_Init>:
+#include "systick.h"
+
+void SysTick_Init( void )
+{
+ 800060c:	b580      	push	{r7, lr}
+ 800060e:	af00      	add	r7, sp, #0
+    /* Processor clock (HCLK = 8MHz) as SysTick clocksource */
+    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk;
+ 8000610:	4b0a      	ldr	r3, [pc, #40]	; (800063c <SysTick_Init+0x30>)
+ 8000612:	2204      	movs	r2, #4
+ 8000614:	601a      	str	r2, [r3, #0]
+
+    /* SysTick exception request disabled */
+    SysTick->CTRL &= ~SysTick_CTRL_TICKINT_Msk;
+ 8000616:	4b09      	ldr	r3, [pc, #36]	; (800063c <SysTick_Init+0x30>)
+ 8000618:	681a      	ldr	r2, [r3, #0]
+ 800061a:	4b08      	ldr	r3, [pc, #32]	; (800063c <SysTick_Init+0x30>)
+ 800061c:	2102      	movs	r1, #2
+ 800061e:	438a      	bics	r2, r1
+ 8000620:	601a      	str	r2, [r3, #0]
+
+    /* SysTick reload value set to 1ms.
+       RELOAD = 1ms / ( 1 / 8MHz ) */
+    SysTick->LOAD = 0x1F40U;
+ 8000622:	4b06      	ldr	r3, [pc, #24]	; (800063c <SysTick_Init+0x30>)
+ 8000624:	22fa      	movs	r2, #250	; 0xfa
+ 8000626:	0152      	lsls	r2, r2, #5
+ 8000628:	605a      	str	r2, [r3, #4]
+
+    /* Enable SysTick */
+    SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
+ 800062a:	4b04      	ldr	r3, [pc, #16]	; (800063c <SysTick_Init+0x30>)
+ 800062c:	681a      	ldr	r2, [r3, #0]
+ 800062e:	4b03      	ldr	r3, [pc, #12]	; (800063c <SysTick_Init+0x30>)
+ 8000630:	2101      	movs	r1, #1
+ 8000632:	430a      	orrs	r2, r1
+ 8000634:	601a      	str	r2, [r3, #0]
+}
+ 8000636:	46c0      	nop			; (mov r8, r8)
+ 8000638:	46bd      	mov	sp, r7
+ 800063a:	bd80      	pop	{r7, pc}
+ 800063c:	e000e010 	.word	0xe000e010
+
+08000640 <Systick_Delay_Ms>:
+
+void Systick_Delay_Ms( uint32_t delay )
+{
+ 8000640:	b580      	push	{r7, lr}
+ 8000642:	b084      	sub	sp, #16
+ 8000644:	af00      	add	r7, sp, #0
+ 8000646:	6078      	str	r0, [r7, #4]
+    uint32_t wait;
+
+    /* SysTick current value set to 0 */
+    SysTick->VAL = 0x0U;
+ 8000648:	4b11      	ldr	r3, [pc, #68]	; (8000690 <Systick_Delay_Ms+0x50>)
+ 800064a:	2200      	movs	r2, #0
+ 800064c:	609a      	str	r2, [r3, #8]
+
+    /* Enable SysTick */
+    SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
+ 800064e:	4b10      	ldr	r3, [pc, #64]	; (8000690 <Systick_Delay_Ms+0x50>)
+ 8000650:	681a      	ldr	r2, [r3, #0]
+ 8000652:	4b0f      	ldr	r3, [pc, #60]	; (8000690 <Systick_Delay_Ms+0x50>)
+ 8000654:	2101      	movs	r1, #1
+ 8000656:	430a      	orrs	r2, r1
+ 8000658:	601a      	str	r2, [r3, #0]
+
+    /* count 'delay' ms */
+    for ( wait = 0; wait < delay; wait++ )
+ 800065a:	2300      	movs	r3, #0
+ 800065c:	60fb      	str	r3, [r7, #12]
+ 800065e:	e009      	b.n	8000674 <Systick_Delay_Ms+0x34>
+    {   
+        /* wait for SysTick value to be 0 */
+        while ( ( SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk ) == 0U )
+ 8000660:	46c0      	nop			; (mov r8, r8)
+ 8000662:	4b0b      	ldr	r3, [pc, #44]	; (8000690 <Systick_Delay_Ms+0x50>)
+ 8000664:	681a      	ldr	r2, [r3, #0]
+ 8000666:	2380      	movs	r3, #128	; 0x80
+ 8000668:	025b      	lsls	r3, r3, #9
+ 800066a:	4013      	ands	r3, r2
+ 800066c:	d0f9      	beq.n	8000662 <Systick_Delay_Ms+0x22>
+    for ( wait = 0; wait < delay; wait++ )
+ 800066e:	68fb      	ldr	r3, [r7, #12]
+ 8000670:	3301      	adds	r3, #1
+ 8000672:	60fb      	str	r3, [r7, #12]
+ 8000674:	68fa      	ldr	r2, [r7, #12]
+ 8000676:	687b      	ldr	r3, [r7, #4]
+ 8000678:	429a      	cmp	r2, r3
+ 800067a:	d3f1      	bcc.n	8000660 <Systick_Delay_Ms+0x20>
+            /* do nothing */
+        }
+    }
+
+    /* Disable SysTick */
+    SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
+ 800067c:	4b04      	ldr	r3, [pc, #16]	; (8000690 <Systick_Delay_Ms+0x50>)
+ 800067e:	681a      	ldr	r2, [r3, #0]
+ 8000680:	4b03      	ldr	r3, [pc, #12]	; (8000690 <Systick_Delay_Ms+0x50>)
+ 8000682:	2101      	movs	r1, #1
+ 8000684:	438a      	bics	r2, r1
+ 8000686:	601a      	str	r2, [r3, #0]
+}
+ 8000688:	46c0      	nop			; (mov r8, r8)
+ 800068a:	46bd      	mov	sp, r7
+ 800068c:	b004      	add	sp, #16
+ 800068e:	bd80      	pop	{r7, pc}
+ 8000690:	e000e010 	.word	0xe000e010
+
+08000694 <I2C1_Init>:
+#include "i2c.h"
+
+void I2C1_Init( void )
+{
+ 8000694:	b580      	push	{r7, lr}
+ 8000696:	af00      	add	r7, sp, #0
+    /* enable GPIOB clock access */
+    GPIOB_CLK_ENBL();
+ 8000698:	4b61      	ldr	r3, [pc, #388]	; (8000820 <I2C1_Init+0x18c>)
+ 800069a:	695a      	ldr	r2, [r3, #20]
+ 800069c:	4b60      	ldr	r3, [pc, #384]	; (8000820 <I2C1_Init+0x18c>)
+ 800069e:	2180      	movs	r1, #128	; 0x80
+ 80006a0:	02c9      	lsls	r1, r1, #11
+ 80006a2:	430a      	orrs	r2, r1
+ 80006a4:	615a      	str	r2, [r3, #20]
+
+    /* GPIOB6 (I2C1_SCL) in alternate function mode */
+    GPIOB->MODER |=  GPIO_MODER_MODER6_1;
+ 80006a6:	4b5f      	ldr	r3, [pc, #380]	; (8000824 <I2C1_Init+0x190>)
+ 80006a8:	681a      	ldr	r2, [r3, #0]
+ 80006aa:	4b5e      	ldr	r3, [pc, #376]	; (8000824 <I2C1_Init+0x190>)
+ 80006ac:	2180      	movs	r1, #128	; 0x80
+ 80006ae:	0189      	lsls	r1, r1, #6
+ 80006b0:	430a      	orrs	r2, r1
+ 80006b2:	601a      	str	r2, [r3, #0]
+    GPIOB->MODER &= ~GPIO_MODER_MODER6_0;
+ 80006b4:	4b5b      	ldr	r3, [pc, #364]	; (8000824 <I2C1_Init+0x190>)
+ 80006b6:	681a      	ldr	r2, [r3, #0]
+ 80006b8:	4b5a      	ldr	r3, [pc, #360]	; (8000824 <I2C1_Init+0x190>)
+ 80006ba:	495b      	ldr	r1, [pc, #364]	; (8000828 <I2C1_Init+0x194>)
+ 80006bc:	400a      	ands	r2, r1
+ 80006be:	601a      	str	r2, [r3, #0]
+
+    /* GPIOB6 (I2C1_SCL) as open-drain output */
+    GPIOB->OTYPER |= GPIO_OTYPER_OT_6;
+ 80006c0:	4b58      	ldr	r3, [pc, #352]	; (8000824 <I2C1_Init+0x190>)
+ 80006c2:	685a      	ldr	r2, [r3, #4]
+ 80006c4:	4b57      	ldr	r3, [pc, #348]	; (8000824 <I2C1_Init+0x190>)
+ 80006c6:	2140      	movs	r1, #64	; 0x40
+ 80006c8:	430a      	orrs	r2, r1
+ 80006ca:	605a      	str	r2, [r3, #4]
+
+    /* GPIOB6 (I2C1_SCL) with pull-up resistor */
+    GPIOB->PUPDR &= ~GPIO_PUPDR_PUPDR6_1;
+ 80006cc:	4b55      	ldr	r3, [pc, #340]	; (8000824 <I2C1_Init+0x190>)
+ 80006ce:	68da      	ldr	r2, [r3, #12]
+ 80006d0:	4b54      	ldr	r3, [pc, #336]	; (8000824 <I2C1_Init+0x190>)
+ 80006d2:	4956      	ldr	r1, [pc, #344]	; (800082c <I2C1_Init+0x198>)
+ 80006d4:	400a      	ands	r2, r1
+ 80006d6:	60da      	str	r2, [r3, #12]
+    GPIOB->PUPDR |=  GPIO_PUPDR_PUPDR6_0;
+ 80006d8:	4b52      	ldr	r3, [pc, #328]	; (8000824 <I2C1_Init+0x190>)
+ 80006da:	68da      	ldr	r2, [r3, #12]
+ 80006dc:	4b51      	ldr	r3, [pc, #324]	; (8000824 <I2C1_Init+0x190>)
+ 80006de:	2180      	movs	r1, #128	; 0x80
+ 80006e0:	0149      	lsls	r1, r1, #5
+ 80006e2:	430a      	orrs	r2, r1
+ 80006e4:	60da      	str	r2, [r3, #12]
+
+    /* GPIOB6 in AF1 (I2C1_SCL) */
+    GPIOB->AFR[ 0 ] &= ~GPIO_AFRL_AFSEL6_3;
+ 80006e6:	4b4f      	ldr	r3, [pc, #316]	; (8000824 <I2C1_Init+0x190>)
+ 80006e8:	6a1a      	ldr	r2, [r3, #32]
+ 80006ea:	4b4e      	ldr	r3, [pc, #312]	; (8000824 <I2C1_Init+0x190>)
+ 80006ec:	4950      	ldr	r1, [pc, #320]	; (8000830 <I2C1_Init+0x19c>)
+ 80006ee:	400a      	ands	r2, r1
+ 80006f0:	621a      	str	r2, [r3, #32]
+    GPIOB->AFR[ 0 ] &= ~GPIO_AFRL_AFSEL6_2;
+ 80006f2:	4b4c      	ldr	r3, [pc, #304]	; (8000824 <I2C1_Init+0x190>)
+ 80006f4:	6a1a      	ldr	r2, [r3, #32]
+ 80006f6:	4b4b      	ldr	r3, [pc, #300]	; (8000824 <I2C1_Init+0x190>)
+ 80006f8:	494e      	ldr	r1, [pc, #312]	; (8000834 <I2C1_Init+0x1a0>)
+ 80006fa:	400a      	ands	r2, r1
+ 80006fc:	621a      	str	r2, [r3, #32]
+    GPIOB->AFR[ 0 ] &= ~GPIO_AFRL_AFSEL6_1;
+ 80006fe:	4b49      	ldr	r3, [pc, #292]	; (8000824 <I2C1_Init+0x190>)
+ 8000700:	6a1a      	ldr	r2, [r3, #32]
+ 8000702:	4b48      	ldr	r3, [pc, #288]	; (8000824 <I2C1_Init+0x190>)
+ 8000704:	494c      	ldr	r1, [pc, #304]	; (8000838 <I2C1_Init+0x1a4>)
+ 8000706:	400a      	ands	r2, r1
+ 8000708:	621a      	str	r2, [r3, #32]
+    GPIOB->AFR[ 0 ] |=  GPIO_AFRL_AFSEL6_0;
+ 800070a:	4b46      	ldr	r3, [pc, #280]	; (8000824 <I2C1_Init+0x190>)
+ 800070c:	6a1a      	ldr	r2, [r3, #32]
+ 800070e:	4b45      	ldr	r3, [pc, #276]	; (8000824 <I2C1_Init+0x190>)
+ 8000710:	2180      	movs	r1, #128	; 0x80
+ 8000712:	0449      	lsls	r1, r1, #17
+ 8000714:	430a      	orrs	r2, r1
+ 8000716:	621a      	str	r2, [r3, #32]
+
+    /* GPIOB7 (I2C1_SDA) in alternate function mode */
+    GPIOB->MODER |=  GPIO_MODER_MODER7_1;
+ 8000718:	4b42      	ldr	r3, [pc, #264]	; (8000824 <I2C1_Init+0x190>)
+ 800071a:	681a      	ldr	r2, [r3, #0]
+ 800071c:	4b41      	ldr	r3, [pc, #260]	; (8000824 <I2C1_Init+0x190>)
+ 800071e:	2180      	movs	r1, #128	; 0x80
+ 8000720:	0209      	lsls	r1, r1, #8
+ 8000722:	430a      	orrs	r2, r1
+ 8000724:	601a      	str	r2, [r3, #0]
+    GPIOB->MODER &= ~GPIO_MODER_MODER7_0;
+ 8000726:	4b3f      	ldr	r3, [pc, #252]	; (8000824 <I2C1_Init+0x190>)
+ 8000728:	681a      	ldr	r2, [r3, #0]
+ 800072a:	4b3e      	ldr	r3, [pc, #248]	; (8000824 <I2C1_Init+0x190>)
+ 800072c:	4943      	ldr	r1, [pc, #268]	; (800083c <I2C1_Init+0x1a8>)
+ 800072e:	400a      	ands	r2, r1
+ 8000730:	601a      	str	r2, [r3, #0]
+
+    /* GPIOB7 (I2C1_SDA) as open-drain output */
+    GPIOB->OTYPER |= GPIO_OTYPER_OT_7;
+ 8000732:	4b3c      	ldr	r3, [pc, #240]	; (8000824 <I2C1_Init+0x190>)
+ 8000734:	685a      	ldr	r2, [r3, #4]
+ 8000736:	4b3b      	ldr	r3, [pc, #236]	; (8000824 <I2C1_Init+0x190>)
+ 8000738:	2180      	movs	r1, #128	; 0x80
+ 800073a:	430a      	orrs	r2, r1
+ 800073c:	605a      	str	r2, [r3, #4]
+
+    /* GPIOB7 (I2C1_SDA) with pull-up resistor */
+    GPIOB->PUPDR &= ~GPIO_PUPDR_PUPDR7_1;
+ 800073e:	4b39      	ldr	r3, [pc, #228]	; (8000824 <I2C1_Init+0x190>)
+ 8000740:	68da      	ldr	r2, [r3, #12]
+ 8000742:	4b38      	ldr	r3, [pc, #224]	; (8000824 <I2C1_Init+0x190>)
+ 8000744:	493e      	ldr	r1, [pc, #248]	; (8000840 <I2C1_Init+0x1ac>)
+ 8000746:	400a      	ands	r2, r1
+ 8000748:	60da      	str	r2, [r3, #12]
+    GPIOB->PUPDR |=  GPIO_PUPDR_PUPDR7_0;
+ 800074a:	4b36      	ldr	r3, [pc, #216]	; (8000824 <I2C1_Init+0x190>)
+ 800074c:	68da      	ldr	r2, [r3, #12]
+ 800074e:	4b35      	ldr	r3, [pc, #212]	; (8000824 <I2C1_Init+0x190>)
+ 8000750:	2180      	movs	r1, #128	; 0x80
+ 8000752:	01c9      	lsls	r1, r1, #7
+ 8000754:	430a      	orrs	r2, r1
+ 8000756:	60da      	str	r2, [r3, #12]
+
+    /* GPIOB7 in AF1 (I2C1_SDA) */
+    GPIOB->AFR[ 0 ] &= ~GPIO_AFRL_AFSEL7_3;
+ 8000758:	4b32      	ldr	r3, [pc, #200]	; (8000824 <I2C1_Init+0x190>)
+ 800075a:	6a1a      	ldr	r2, [r3, #32]
+ 800075c:	4b31      	ldr	r3, [pc, #196]	; (8000824 <I2C1_Init+0x190>)
+ 800075e:	0052      	lsls	r2, r2, #1
+ 8000760:	0852      	lsrs	r2, r2, #1
+ 8000762:	621a      	str	r2, [r3, #32]
+    GPIOB->AFR[ 0 ] &= ~GPIO_AFRL_AFSEL7_2;
+ 8000764:	4b2f      	ldr	r3, [pc, #188]	; (8000824 <I2C1_Init+0x190>)
+ 8000766:	6a1a      	ldr	r2, [r3, #32]
+ 8000768:	4b2e      	ldr	r3, [pc, #184]	; (8000824 <I2C1_Init+0x190>)
+ 800076a:	4936      	ldr	r1, [pc, #216]	; (8000844 <I2C1_Init+0x1b0>)
+ 800076c:	400a      	ands	r2, r1
+ 800076e:	621a      	str	r2, [r3, #32]
+    GPIOB->AFR[ 0 ] &= ~GPIO_AFRL_AFSEL7_1;
+ 8000770:	4b2c      	ldr	r3, [pc, #176]	; (8000824 <I2C1_Init+0x190>)
+ 8000772:	6a1a      	ldr	r2, [r3, #32]
+ 8000774:	4b2b      	ldr	r3, [pc, #172]	; (8000824 <I2C1_Init+0x190>)
+ 8000776:	4934      	ldr	r1, [pc, #208]	; (8000848 <I2C1_Init+0x1b4>)
+ 8000778:	400a      	ands	r2, r1
+ 800077a:	621a      	str	r2, [r3, #32]
+    GPIOB->AFR[ 0 ] |=  GPIO_AFRL_AFSEL7_0;
+ 800077c:	4b29      	ldr	r3, [pc, #164]	; (8000824 <I2C1_Init+0x190>)
+ 800077e:	6a1a      	ldr	r2, [r3, #32]
+ 8000780:	4b28      	ldr	r3, [pc, #160]	; (8000824 <I2C1_Init+0x190>)
+ 8000782:	2180      	movs	r1, #128	; 0x80
+ 8000784:	0549      	lsls	r1, r1, #21
+ 8000786:	430a      	orrs	r2, r1
+ 8000788:	621a      	str	r2, [r3, #32]
+
+    /* enable I2C1 clock access */
+    I2C1_CLK_ENBL();
+ 800078a:	4b25      	ldr	r3, [pc, #148]	; (8000820 <I2C1_Init+0x18c>)
+ 800078c:	69da      	ldr	r2, [r3, #28]
+ 800078e:	4b24      	ldr	r3, [pc, #144]	; (8000820 <I2C1_Init+0x18c>)
+ 8000790:	2180      	movs	r1, #128	; 0x80
+ 8000792:	0389      	lsls	r1, r1, #14
+ 8000794:	430a      	orrs	r2, r1
+ 8000796:	61da      	str	r2, [r3, #28]
+
+    /* analog filter enabled */
+    I2C1->CR1 &= ~I2C_CR1_ANFOFF;
+ 8000798:	4b2c      	ldr	r3, [pc, #176]	; (800084c <I2C1_Init+0x1b8>)
+ 800079a:	681a      	ldr	r2, [r3, #0]
+ 800079c:	4b2b      	ldr	r3, [pc, #172]	; (800084c <I2C1_Init+0x1b8>)
+ 800079e:	4922      	ldr	r1, [pc, #136]	; (8000828 <I2C1_Init+0x194>)
+ 80007a0:	400a      	ands	r2, r1
+ 80007a2:	601a      	str	r2, [r3, #0]
+
+    /* select SYSCLK (= HSI = 8 MHz for this project)
+       as I2C1 clock source*/
+    RCC->CFGR3 |= RCC_CFGR3_I2C1SW;
+ 80007a4:	4b1e      	ldr	r3, [pc, #120]	; (8000820 <I2C1_Init+0x18c>)
+ 80007a6:	6b1a      	ldr	r2, [r3, #48]	; 0x30
+ 80007a8:	4b1d      	ldr	r3, [pc, #116]	; (8000820 <I2C1_Init+0x18c>)
+ 80007aa:	2110      	movs	r1, #16
+ 80007ac:	430a      	orrs	r2, r1
+ 80007ae:	631a      	str	r2, [r3, #48]	; 0x30
+
+    /* digital filter disabled */
+    I2C1->CR1 &= ~I2C_CR1_DNF_3;
+ 80007b0:	4b26      	ldr	r3, [pc, #152]	; (800084c <I2C1_Init+0x1b8>)
+ 80007b2:	681a      	ldr	r2, [r3, #0]
+ 80007b4:	4b25      	ldr	r3, [pc, #148]	; (800084c <I2C1_Init+0x1b8>)
+ 80007b6:	4926      	ldr	r1, [pc, #152]	; (8000850 <I2C1_Init+0x1bc>)
+ 80007b8:	400a      	ands	r2, r1
+ 80007ba:	601a      	str	r2, [r3, #0]
+    I2C1->CR1 &= ~I2C_CR1_DNF_2;
+ 80007bc:	4b23      	ldr	r3, [pc, #140]	; (800084c <I2C1_Init+0x1b8>)
+ 80007be:	681a      	ldr	r2, [r3, #0]
+ 80007c0:	4b22      	ldr	r3, [pc, #136]	; (800084c <I2C1_Init+0x1b8>)
+ 80007c2:	4924      	ldr	r1, [pc, #144]	; (8000854 <I2C1_Init+0x1c0>)
+ 80007c4:	400a      	ands	r2, r1
+ 80007c6:	601a      	str	r2, [r3, #0]
+    I2C1->CR1 &= ~I2C_CR1_DNF_1;
+ 80007c8:	4b20      	ldr	r3, [pc, #128]	; (800084c <I2C1_Init+0x1b8>)
+ 80007ca:	681a      	ldr	r2, [r3, #0]
+ 80007cc:	4b1f      	ldr	r3, [pc, #124]	; (800084c <I2C1_Init+0x1b8>)
+ 80007ce:	4922      	ldr	r1, [pc, #136]	; (8000858 <I2C1_Init+0x1c4>)
+ 80007d0:	400a      	ands	r2, r1
+ 80007d2:	601a      	str	r2, [r3, #0]
+    I2C1->CR1 &= ~I2C_CR1_DNF_0;
+ 80007d4:	4b1d      	ldr	r3, [pc, #116]	; (800084c <I2C1_Init+0x1b8>)
+ 80007d6:	681a      	ldr	r2, [r3, #0]
+ 80007d8:	4b1c      	ldr	r3, [pc, #112]	; (800084c <I2C1_Init+0x1b8>)
+ 80007da:	4920      	ldr	r1, [pc, #128]	; (800085c <I2C1_Init+0x1c8>)
+ 80007dc:	400a      	ands	r2, r1
+ 80007de:	601a      	str	r2, [r3, #0]
+
+    /* transfer will be complete after NBYTES data transfer */
+    I2C1->CR2 &= ~I2C_CR2_RELOAD;
+ 80007e0:	4b1a      	ldr	r3, [pc, #104]	; (800084c <I2C1_Init+0x1b8>)
+ 80007e2:	685a      	ldr	r2, [r3, #4]
+ 80007e4:	4b19      	ldr	r3, [pc, #100]	; (800084c <I2C1_Init+0x1b8>)
+ 80007e6:	491e      	ldr	r1, [pc, #120]	; (8000860 <I2C1_Init+0x1cc>)
+ 80007e8:	400a      	ands	r2, r1
+ 80007ea:	605a      	str	r2, [r3, #4]
+
+    /* I2C1 in automatic end mode.
+       Master automatically sends a STOP condition once the number
+       of bytes in NBYTES has been transferred */
+    I2C1->CR2 |= I2C_CR2_AUTOEND; // DUDA DE SI DEBE SER 1 o 0
+ 80007ec:	4b17      	ldr	r3, [pc, #92]	; (800084c <I2C1_Init+0x1b8>)
+ 80007ee:	685a      	ldr	r2, [r3, #4]
+ 80007f0:	4b16      	ldr	r3, [pc, #88]	; (800084c <I2C1_Init+0x1b8>)
+ 80007f2:	2180      	movs	r1, #128	; 0x80
+ 80007f4:	0489      	lsls	r1, r1, #18
+ 80007f6:	430a      	orrs	r2, r1
+ 80007f8:	605a      	str	r2, [r3, #4]
+
+    /* I2C1 in 7 bit addressing mode */
+    I2C1->CR2 &= ~I2C_CR2_ADD10;
+ 80007fa:	4b14      	ldr	r3, [pc, #80]	; (800084c <I2C1_Init+0x1b8>)
+ 80007fc:	685a      	ldr	r2, [r3, #4]
+ 80007fe:	4b13      	ldr	r3, [pc, #76]	; (800084c <I2C1_Init+0x1b8>)
+ 8000800:	4913      	ldr	r1, [pc, #76]	; (8000850 <I2C1_Init+0x1bc>)
+ 8000802:	400a      	ands	r2, r1
+ 8000804:	605a      	str	r2, [r3, #4]
+       SDADEL = 0  (0x00)
+       SCLH   = 29 (0x1D)
+       SCLL   = 43 (0x2B)
+       
+       NOTE: I2C1 in standard mode (100KHz) */
+    I2C1->TIMINGR = 0x00201D2BU;
+ 8000806:	4b11      	ldr	r3, [pc, #68]	; (800084c <I2C1_Init+0x1b8>)
+ 8000808:	4a16      	ldr	r2, [pc, #88]	; (8000864 <I2C1_Init+0x1d0>)
+ 800080a:	611a      	str	r2, [r3, #16]
+
+    /* enable I2C1 */
+    I2C1->CR1 |= I2C_CR1_PE;
+ 800080c:	4b0f      	ldr	r3, [pc, #60]	; (800084c <I2C1_Init+0x1b8>)
+ 800080e:	681a      	ldr	r2, [r3, #0]
+ 8000810:	4b0e      	ldr	r3, [pc, #56]	; (800084c <I2C1_Init+0x1b8>)
+ 8000812:	2101      	movs	r1, #1
+ 8000814:	430a      	orrs	r2, r1
+ 8000816:	601a      	str	r2, [r3, #0]
+}
+ 8000818:	46c0      	nop			; (mov r8, r8)
+ 800081a:	46bd      	mov	sp, r7
+ 800081c:	bd80      	pop	{r7, pc}
+ 800081e:	46c0      	nop			; (mov r8, r8)
+ 8000820:	40021000 	.word	0x40021000
+ 8000824:	48000400 	.word	0x48000400
+ 8000828:	ffffefff 	.word	0xffffefff
+ 800082c:	ffffdfff 	.word	0xffffdfff
+ 8000830:	f7ffffff 	.word	0xf7ffffff
+ 8000834:	fbffffff 	.word	0xfbffffff
+ 8000838:	fdffffff 	.word	0xfdffffff
+ 800083c:	ffffbfff 	.word	0xffffbfff
+ 8000840:	ffff7fff 	.word	0xffff7fff
+ 8000844:	bfffffff 	.word	0xbfffffff
+ 8000848:	dfffffff 	.word	0xdfffffff
+ 800084c:	40005400 	.word	0x40005400
+ 8000850:	fffff7ff 	.word	0xfffff7ff
+ 8000854:	fffffbff 	.word	0xfffffbff
+ 8000858:	fffffdff 	.word	0xfffffdff
+ 800085c:	fffffeff 	.word	0xfffffeff
+ 8000860:	feffffff 	.word	0xfeffffff
+ 8000864:	00201d2b 	.word	0x00201d2b
+
+08000868 <I2C1_Write>:
+
+void I2C1_Write( uint8_t slaveAddr, uint8_t *data, uint8_t size )
+{   
+ 8000868:	b580      	push	{r7, lr}
+ 800086a:	b084      	sub	sp, #16
+ 800086c:	af00      	add	r7, sp, #0
+ 800086e:	6039      	str	r1, [r7, #0]
+ 8000870:	0011      	movs	r1, r2
+ 8000872:	1dfb      	adds	r3, r7, #7
+ 8000874:	1c02      	adds	r2, r0, #0
+ 8000876:	701a      	strb	r2, [r3, #0]
+ 8000878:	1dbb      	adds	r3, r7, #6
+ 800087a:	1c0a      	adds	r2, r1, #0
+ 800087c:	701a      	strb	r2, [r3, #0]
+    uint8_t byteCtr;
+    
+    /* set slave address */
+    I2C1->CR2 |= ( slaveAddr & SLAVE_ADDR_7b_Msk ) << I2C_CR2_SADD_7_1_Pos;
+ 800087e:	4b22      	ldr	r3, [pc, #136]	; (8000908 <I2C1_Write+0xa0>)
+ 8000880:	6859      	ldr	r1, [r3, #4]
+ 8000882:	1dfb      	adds	r3, r7, #7
+ 8000884:	781b      	ldrb	r3, [r3, #0]
+ 8000886:	005b      	lsls	r3, r3, #1
+ 8000888:	22ff      	movs	r2, #255	; 0xff
+ 800088a:	401a      	ands	r2, r3
+ 800088c:	4b1e      	ldr	r3, [pc, #120]	; (8000908 <I2C1_Write+0xa0>)
+ 800088e:	430a      	orrs	r2, r1
+ 8000890:	605a      	str	r2, [r3, #4]
+
+    /* set number of bytes to be sent */
+    I2C1->CR2 |= size << I2C_CR2_NBYTES_Pos;
+ 8000892:	4b1d      	ldr	r3, [pc, #116]	; (8000908 <I2C1_Write+0xa0>)
+ 8000894:	6859      	ldr	r1, [r3, #4]
+ 8000896:	1dbb      	adds	r3, r7, #6
+ 8000898:	781b      	ldrb	r3, [r3, #0]
+ 800089a:	041a      	lsls	r2, r3, #16
+ 800089c:	4b1a      	ldr	r3, [pc, #104]	; (8000908 <I2C1_Write+0xa0>)
+ 800089e:	430a      	orrs	r2, r1
+ 80008a0:	605a      	str	r2, [r3, #4]
+
+    /* set read/write bit (0 = write operation) */
+    I2C1->CR2 &= ~I2C_CR2_RD_WRN;
+ 80008a2:	4b19      	ldr	r3, [pc, #100]	; (8000908 <I2C1_Write+0xa0>)
+ 80008a4:	685a      	ldr	r2, [r3, #4]
+ 80008a6:	4b18      	ldr	r3, [pc, #96]	; (8000908 <I2C1_Write+0xa0>)
+ 80008a8:	4918      	ldr	r1, [pc, #96]	; (800090c <I2C1_Write+0xa4>)
+ 80008aa:	400a      	ands	r2, r1
+ 80008ac:	605a      	str	r2, [r3, #4]
+    
+    /* set start bit */
+    I2C1->CR2 |= I2C_CR2_START;
+ 80008ae:	4b16      	ldr	r3, [pc, #88]	; (8000908 <I2C1_Write+0xa0>)
+ 80008b0:	685a      	ldr	r2, [r3, #4]
+ 80008b2:	4b15      	ldr	r3, [pc, #84]	; (8000908 <I2C1_Write+0xa0>)
+ 80008b4:	2180      	movs	r1, #128	; 0x80
+ 80008b6:	0189      	lsls	r1, r1, #6
+ 80008b8:	430a      	orrs	r2, r1
+ 80008ba:	605a      	str	r2, [r3, #4]
+       master automatically sends start bit + slave address + write bit */
+
+    /* if slave address is correct, then the slave will send an ACK bit */
+    
+    /* send each byte from the data array over I2C1 */
+    for ( byteCtr = 0; byteCtr < size; byteCtr++, data++ )
+ 80008bc:	230f      	movs	r3, #15
+ 80008be:	18fb      	adds	r3, r7, r3
+ 80008c0:	2200      	movs	r2, #0
+ 80008c2:	701a      	strb	r2, [r3, #0]
+ 80008c4:	e013      	b.n	80008ee <I2C1_Write+0x86>
+    {
+        /* wait for transmit data register (TXD) to be empty */
+        while ( ( ( I2C1->ISR & I2C_ISR_TXE ) != I2C_ISR_TXE ) )
+ 80008c6:	46c0      	nop			; (mov r8, r8)
+ 80008c8:	4b0f      	ldr	r3, [pc, #60]	; (8000908 <I2C1_Write+0xa0>)
+ 80008ca:	699b      	ldr	r3, [r3, #24]
+ 80008cc:	2201      	movs	r2, #1
+ 80008ce:	4013      	ands	r3, r2
+ 80008d0:	2b01      	cmp	r3, #1
+ 80008d2:	d1f9      	bne.n	80008c8 <I2C1_Write+0x60>
+        {
+            /* do nothing */
+        }
+
+        /* transmit current data byte */
+        I2C1->TXDR = ( uint32_t ) ( *data );
+ 80008d4:	683b      	ldr	r3, [r7, #0]
+ 80008d6:	781a      	ldrb	r2, [r3, #0]
+ 80008d8:	4b0b      	ldr	r3, [pc, #44]	; (8000908 <I2C1_Write+0xa0>)
+ 80008da:	629a      	str	r2, [r3, #40]	; 0x28
+    for ( byteCtr = 0; byteCtr < size; byteCtr++, data++ )
+ 80008dc:	210f      	movs	r1, #15
+ 80008de:	187b      	adds	r3, r7, r1
+ 80008e0:	781a      	ldrb	r2, [r3, #0]
+ 80008e2:	187b      	adds	r3, r7, r1
+ 80008e4:	3201      	adds	r2, #1
+ 80008e6:	701a      	strb	r2, [r3, #0]
+ 80008e8:	683b      	ldr	r3, [r7, #0]
+ 80008ea:	3301      	adds	r3, #1
+ 80008ec:	603b      	str	r3, [r7, #0]
+ 80008ee:	230f      	movs	r3, #15
+ 80008f0:	18fa      	adds	r2, r7, r3
+ 80008f2:	1dbb      	adds	r3, r7, #6
+ 80008f4:	7812      	ldrb	r2, [r2, #0]
+ 80008f6:	781b      	ldrb	r3, [r3, #0]
+ 80008f8:	429a      	cmp	r2, r3
+ 80008fa:	d3e4      	bcc.n	80008c6 <I2C1_Write+0x5e>
+    }
+
+    /* once transmission is complete ...
+       master automatically sends a stop bit (due to autoend mode enabled) */
+}
+ 80008fc:	46c0      	nop			; (mov r8, r8)
+ 80008fe:	46c0      	nop			; (mov r8, r8)
+ 8000900:	46bd      	mov	sp, r7
+ 8000902:	b004      	add	sp, #16
+ 8000904:	bd80      	pop	{r7, pc}
+ 8000906:	46c0      	nop			; (mov r8, r8)
+ 8000908:	40005400 	.word	0x40005400
+ 800090c:	fffffbff 	.word	0xfffffbff
+
+08000910 <__libc_init_array>:
+ 8000910:	b570      	push	{r4, r5, r6, lr}
+ 8000912:	2600      	movs	r6, #0
+ 8000914:	4c0c      	ldr	r4, [pc, #48]	; (8000948 <__libc_init_array+0x38>)
+ 8000916:	4d0d      	ldr	r5, [pc, #52]	; (800094c <__libc_init_array+0x3c>)
+ 8000918:	1b64      	subs	r4, r4, r5
+ 800091a:	10a4      	asrs	r4, r4, #2
+ 800091c:	42a6      	cmp	r6, r4
+ 800091e:	d109      	bne.n	8000934 <__libc_init_array+0x24>
+ 8000920:	2600      	movs	r6, #0
+ 8000922:	f000 f819 	bl	8000958 <_init>
+ 8000926:	4c0a      	ldr	r4, [pc, #40]	; (8000950 <__libc_init_array+0x40>)
+ 8000928:	4d0a      	ldr	r5, [pc, #40]	; (8000954 <__libc_init_array+0x44>)
+ 800092a:	1b64      	subs	r4, r4, r5
+ 800092c:	10a4      	asrs	r4, r4, #2
+ 800092e:	42a6      	cmp	r6, r4
+ 8000930:	d105      	bne.n	800093e <__libc_init_array+0x2e>
+ 8000932:	bd70      	pop	{r4, r5, r6, pc}
+ 8000934:	00b3      	lsls	r3, r6, #2
+ 8000936:	58eb      	ldr	r3, [r5, r3]
+ 8000938:	4798      	blx	r3
+ 800093a:	3601      	adds	r6, #1
+ 800093c:	e7ee      	b.n	800091c <__libc_init_array+0xc>
+ 800093e:	00b3      	lsls	r3, r6, #2
+ 8000940:	58eb      	ldr	r3, [r5, r3]
+ 8000942:	4798      	blx	r3
+ 8000944:	3601      	adds	r6, #1
+ 8000946:	e7f2      	b.n	800092e <__libc_init_array+0x1e>
+ 8000948:	08000970 	.word	0x08000970
+ 800094c:	08000970 	.word	0x08000970
+ 8000950:	08000974 	.word	0x08000974
+ 8000954:	08000970 	.word	0x08000970
+
+08000958 <_init>:
+ 8000958:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 800095a:	46c0      	nop			; (mov r8, r8)
+ 800095c:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 800095e:	bc08      	pop	{r3}
+ 8000960:	469e      	mov	lr, r3
+ 8000962:	4770      	bx	lr
+
+08000964 <_fini>:
+ 8000964:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8000966:	46c0      	nop			; (mov r8, r8)
+ 8000968:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 800096a:	bc08      	pop	{r3}
+ 800096c:	469e      	mov	lr, r3
+ 800096e:	4770      	bx	lr

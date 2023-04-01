@@ -7,8 +7,7 @@ int main( void )
     /* inititalize I2C1 */
     I2C1_Init();
 
-    /* send data over I2C */
-    //I2C1_Write( SLAVE_ADDRESS, data, sizeof( data ) );
+    /* send data over I2C1 */
     I2C1_Write( SLAVE_ADDRESS, data, sizeof( data ) );
 
     while( 1 )
