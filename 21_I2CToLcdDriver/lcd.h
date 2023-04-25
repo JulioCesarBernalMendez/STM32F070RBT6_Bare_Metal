@@ -52,17 +52,32 @@
     #define INTERFACE_DATA_4_BIT        (0x00U)
     #define INTERFACE_DATA_8_BIT        (0x10U)
 
+    typedef struct
+    {   
+        uint8_t lcdaddress;
+        uint8_t backlight;
+        uint8_t shiftdisplay;
+        uint8_t incrementddram;
+        uint8_t blink;
+        uint8_t cursor;
+        uint8_t display;
+        uint8_t shiftcursor;
+        uint8_t font;
+        uint8_t displayline;
+        uint8_t datalenght;
+    } LCD_HandleTypeDef;
+
     /* high-level functions */
-    void LCD_Init( uint8_t lcdAddress );
-    void LCD_API_Move_Cursor( uint8_t lcdAddress, uint8_t row, uint8_t col );
-    void LCD_API_Print_Character( uint8_t lcdAddress, uint8_t character );
-    void LCD_API_Print_String( uint8_t lcdAddress, uint8_t *string, uint8_t size );
-    void LCD_API_Shift_Screen_Left( uint8_t lcdAddress, uint8_t positions, uint32_t delay_ms );
-    void LCD_API_Shift_Screen_Right( uint8_t lcdAddress, uint8_t positions, uint32_t delay_ms );
+    void LCD_Init( LCD_HandleTypeDef *hlcd );
+    void LCD_API_Move_Cursor( LCD_HandleTypeDef *hlcd, uint8_t row, uint8_t col );
+    void LCD_API_Print_Character( LCD_HandleTypeDef *hlcd, uint8_t character );
+    void LCD_API_Print_String( LCD_HandleTypeDef *hlcd, uint8_t *string, uint8_t size );
+    void LCD_API_Shift_Screen_Left( LCD_HandleTypeDef *hlcd, uint8_t positions, uint32_t delay_ms );
+    void LCD_API_Shift_Screen_Right( LCD_HandleTypeDef *hlcd, uint8_t positions, uint32_t delay_ms );
 
     /* low-level functions */
-    void LCD_Start_Data_Write( uint8_t lcdAddress, uint8_t prevData );
-    void LCD_Send_Instruction( uint8_t lcdAddress, uint8_t instruction );
-    void LCD_Write_To_DDRAM( uint8_t lcdAddress, uint8_t data );
+    void LCD_Start_Data_Write( LCD_HandleTypeDef *hlcd, uint8_t prevData );
+    void LCD_Send_Instruction( LCD_HandleTypeDef *hlcd, uint8_t instruction );
+    void LCD_Write_To_DDRAM( LCD_HandleTypeDef *hlcd, uint8_t data );
     
 #endif
