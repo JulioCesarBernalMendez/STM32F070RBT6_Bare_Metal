@@ -1,7 +1,7 @@
 #include "lcd.h"
 
 static uint8_t byte;
-static uint8_t DDRAMADDR = 0;
+static uint8_t DDRAMADDR = 0U;
 
 void LCD_Init( LCD_HandleTypeDef *hlcd )
 {
@@ -13,16 +13,19 @@ void LCD_Init( LCD_HandleTypeDef *hlcd )
     /* inititalize I2C1 */
     I2C1_Init();
 
-    /* wait 41 ms */
-    TIM3_Delay_ms( 41U );
+    /* wait 40 ms */
+    TIM3_Delay_ms( 40U );
 
     /* function set (this is sent in 8 bit mode)
        DB7 = 0, DB6 = 0, DB5 = 1, DB4 = 1 = ST7066U in 8 bit mode
        backlight = backlight ON = 1, E = 0, RW = 0, RS = 0
        (not used) DB3 = N = x, DB2 = F = x, DB1 = x, DB0 = x */
-    i2cByte = 0x38;
-    I2C1_Write( hlcd->lcdaddress, &i2cByte, 1 );
+    i2cByte = 0x38U;
+    I2C1_Write( hlcd->lcdaddress, &i2cByte, 1U );
     LCD_Start_Data_Write( hlcd, i2cByte );
+
+    /* wait 37us */
+    TIM3_Delay_us( 37U ),
 
     /* 1st try, set ST7066U to (8/4) bit datalength, (1/2) display line
        and (5x8/5x11) dots font mode */
@@ -48,12 +51,12 @@ void LCD_Start_Data_Write( LCD_HandleTypeDef *hlcd, uint8_t prevData )
     /* enable E signal without touching previous data.
        This tells the ST7066U driver to accept current data on its pins */
     prevData |= E_ENABLED;
-    I2C1_Write( hlcd->lcdaddress, &prevData, 1 );
+    I2C1_Write( hlcd->lcdaddress, &prevData, 1U );
 
     /* disable E signal.
        Prepare driver for future commands or data */
     prevData &= ~E_ENABLED;
-    I2C1_Write( hlcd->lcdaddress, &prevData, 1 );
+    I2C1_Write( hlcd->lcdaddress, &prevData, 1U );
 }
 
 void LCD_Send_Instruction( LCD_HandleTypeDef *hlcd, uint8_t instruction )
@@ -80,7 +83,7 @@ void LCD_Send_Instruction( LCD_HandleTypeDef *hlcd, uint8_t instruction )
     }
 
     /* send MOST SIGNIFICANT nibble + extra parameters over I2C1 */
-    I2C1_Write( hlcd->lcdaddress, &byte, 1 );
+    I2C1_Write( hlcd->lcdaddress, &byte, 1U );
     LCD_Start_Data_Write( hlcd, byte );
 
     /* instruction's LEAST SIGNIFICANT nibble + light + write instruction */
@@ -117,7 +120,7 @@ void LCD_Send_Instruction( LCD_HandleTypeDef *hlcd, uint8_t instruction )
     }
 
     /* send LEAST SIGNIFICANT nibble + extra parameters over I2C1 */
-    I2C1_Write( hlcd->lcdaddress, &byte, 1 );
+    I2C1_Write( hlcd->lcdaddress, &byte, 1U );
     LCD_Start_Data_Write( hlcd, byte );
 
     if ( ( instruction == CLEAR_DISPLAY_REG ) || ( instruction == RETURN_HOME_REG ) )
@@ -135,13 +138,13 @@ void LCD_Send_Instruction( LCD_HandleTypeDef *hlcd, uint8_t instruction )
 void LCD_Write_To_DDRAM( LCD_HandleTypeDef *hlcd, uint8_t data )
 {
     /* data's MSB nible + extra parameters */
-    byte = ( data & 0xF0 ) | hlcd->backlight | RW_WRITE | RS_DATA;
+    byte = ( data & 0xF0U ) | hlcd->backlight | RW_WRITE | RS_DATA;
     I2C1_Write( hlcd->lcdaddress, &byte, 1 );
     LCD_Start_Data_Write( hlcd, byte );
 
     /* data's LSB nible + extra parameters */
     byte = ( data << 4 ) | hlcd->backlight | RW_WRITE | RS_DATA;
-    I2C1_Write( hlcd->lcdaddress, &byte, 1 );
+    I2C1_Write( hlcd->lcdaddress, &byte, 1U );
     LCD_Start_Data_Write( hlcd, byte );
 
     /* wait 37 us */
@@ -150,9 +153,9 @@ void LCD_Write_To_DDRAM( LCD_HandleTypeDef *hlcd, uint8_t data )
 
 void LCD_API_Move_Cursor( LCD_HandleTypeDef *hlcd, uint8_t row, uint8_t col )
 {
-    if ( row <= 1U && col <= 15 )
+    if ( row <= 1U && col <= 15U )
     {   
-        if ( row == 1 )
+        if ( row == 1U )
         {
             row = 0x40U;
         }
@@ -174,7 +177,7 @@ void LCD_API_Print_String( LCD_HandleTypeDef *hlcd, uint8_t *string, uint8_t siz
 {
     uint8_t i;
 
-    for ( i = 0; i < size; i++ )
+    for ( i = 0U; i < size; i++ )
     {
         LCD_API_Print_Character( hlcd, string[ i ] );
     }
@@ -184,9 +187,10 @@ void LCD_API_Shift_Screen_Left( LCD_HandleTypeDef *hlcd, uint8_t positions, uint
 {
     uint8_t i;
 
-    for ( i = 0; i < positions; i++ )
+    hlcd->shiftcursor = SC_RL_SHIFT_DISPLAY_LEFT;
+
+    for ( i = 0U; i < positions; i++ )
     {
-        hlcd->shiftcursor = SC_RL_SHIFT_DISPLAY_LEFT;
         LCD_Send_Instruction( hlcd, CURSOR_DISPLAY_SHIFT_REG );
         TIM3_Delay_ms( delay_ms );
     }
@@ -196,9 +200,10 @@ void LCD_API_Shift_Screen_Right( LCD_HandleTypeDef *hlcd, uint8_t positions, uin
 {
     uint8_t i;
 
-    for ( i = 0; i < positions; i++ )
+    hlcd->shiftcursor = SC_RL_SHIFT_DISPLAY_RIGHT;
+
+    for ( i = 0U; i < positions; i++ )
     {
-        hlcd->shiftcursor = SC_RL_SHIFT_DISPLAY_RIGHT;
         LCD_Send_Instruction( hlcd, CURSOR_DISPLAY_SHIFT_REG );
         TIM3_Delay_ms( delay_ms );
     }
