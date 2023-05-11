@@ -70,7 +70,7 @@ void TIM3_Delay_ms( uint32_t mseconds )
     /* enable TIM3 */
     TIM3->CR1 |= TIM_CR1_CEN;
         
-    /* wait entered microseconds */
+    /* wait entered miliseconds */
     for ( i = 0; i < mseconds; i++ )
     {
         /* wait for update flag (1ms) */

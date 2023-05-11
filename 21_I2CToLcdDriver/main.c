@@ -11,12 +11,12 @@ int main( void )
    LCD_Handler.displayline    = DISPLAY_2_LINES;
    LCD_Handler.font           = DISPLAY_FONT_TYPE_5x8;
    LCD_Handler.display        = DISPLAY_ON;
-   LCD_Handler.cursor         = CURSOR_OFF;
-   LCD_Handler.blink          = CURSOR_BLINK_OFF;
+   LCD_Handler.cursor         = CURSOR_ON;
+   LCD_Handler.blink          = CURSOR_BLINK_ON;
    LCD_Handler.incrementddram = ID_DDRAM_ADDRESS_RIGHT;
    LCD_Handler.shiftdisplay   = SHIFT_DISPLAY_OFF;
    LCD_Init( &LCD_Handler );
-
+   
    /* move cursor to first row, third column */
    LCD_API_Move_Cursor( &LCD_Handler, 0U, 2U );
    LCD_API_Print_String( &LCD_Handler, ( uint8_t* ) "LCD DRIVER", 10U );
