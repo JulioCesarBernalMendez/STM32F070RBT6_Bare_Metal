@@ -8,7 +8,7 @@
 
 int main( void )
 {  
-   uint8_t data[ 6 ] = { 0x48, 0x65, 0x6C, 0x6C, 0x6F, '\0' };
+   uint8_t data[ 6 ] = { 0x48U, 0x65U, 0x6CU, 0x6CU, 0x6FU, '\0' };
 
    /* initialize SPI1 peripheral */
    SPI1_Init();
