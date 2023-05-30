@@ -93,9 +93,6 @@ void SPI1_Init( void )
     SPI1->CR2 |=  SPI_CR2_DS_1;
     SPI1->CR2 |=  SPI_CR2_DS_0;
 
-    /* SPI1 RX buffer not empty interrupt enabled */
-    SPI1->CR2 |= SPI_CR2_RXNEIE;
-
     /* SPI1 Motorola mode frame format */
     SPI1->CR2 &= ~SPI_CR2_FRF;
 
@@ -133,9 +130,6 @@ void SPI1_Write( uint8_t *data, uint8_t size )
     {
         /* do nothing */
     }
-
-    /* select slave */
-    SPI1_CS_Enable();
     
     /* loop through the data array */
     for ( item = 0U; item < size; item++ )
@@ -155,7 +149,4 @@ void SPI1_Write( uint8_t *data, uint8_t size )
     {
         /* do nothing */
     }
-
-    /* deselect slave */
-    SPI1_CS_Disable();
 }

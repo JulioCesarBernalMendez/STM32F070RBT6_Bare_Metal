@@ -14,7 +14,9 @@ int main( void )
    SPI1_Init();
 
    /* send data array through SPI1 */
+   SPI1_CS_Enable();
    SPI1_Write( data, 6U );
+   SPI1_CS_Disable();
 
    while( 1 )
    {  
